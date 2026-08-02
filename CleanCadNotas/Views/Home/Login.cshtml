@@ -1,0 +1,106 @@
+﻿@{
+    ViewData["Title"] = "Login";
+    Layout = null; // This view doesn't use a layout
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/css/loginstyle.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="loader-container"><span class="loader"></span></div>
+    <section class="vh-100 gradient-custom">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card" style="border-radius: 1rem;">
+                        <div class="card-body p-5 text-center">
+
+                            <div class="mb-4 mt-3">
+                                <form asp-action="Login" method="post">
+                                    <h2 class="fw-bold mb-2 CadNotas">CadNotas</h2>
+ 
+                                    <p class="mb-5"><span class="half-red">Cadastro de Notas Fiscais</span></p>
+
+                                    <partial name="_StatusMessage" model="@ViewBag?.StatusMessage" />
+
+                                    <div data-mdb-input-init class="form-outline mb-3">
+                                        <input type="text" id="typeEmailX" class="form-control form-control-lg is-invalid" placeholder="Usuario" name="Username" />
+                                        <label class="form-label" for="typeEmailX">Usuario</label>
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                        <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                                            Informe seu usuário!
+                                        </div>
+                                    </div>
+
+                                    <div data-mdb-input-init class="form-outline mb-3">
+                                        <input type="password" id="typePasswordX" class="form-control form-control-lg is-invalid" placeholder="Senha" name="Password" />
+                                        <label class="form-label" for="typePasswordX">Senha</label>
+                                        <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                                            Informe a Senha!
+                                        </div>
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                    </div>
+
+                                    <button data-mdb-button-init data-mdb-ripple-init id="show-loader" class="btn btn-outline-dark btn-lg px-5" type="submit">Login</button>
+                                </form>
+                            </div>
+
+                            <div>
+                                <p class="mb-0">
+                                    Developed by DJR
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById('typeEmailX').addEventListener('input', function () {
+        if (this.value.trim() !== '') {
+        this.classList.remove('is-invalid');
+        this.classList.add('is-valid');
+        } else {
+        this.classList.remove('is-valid');
+        this.classList.add('is-invalid');
+        }
+        });
+
+        document.getElementById('typePasswordX').addEventListener('input', function () {
+        if (this.value.trim() !== '') {
+        this.classList.remove('is-invalid');
+        this.classList.add('is-valid');
+        } else {
+        this.classList.remove('is-valid');
+        this.classList.add('is-invalid');
+        }
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        const loaderContainer = document.querySelector('.loader-container');
+        const button = document.getElementById('show-loader');
+
+        button.addEventListener('click', function () {
+        loaderContainer.style.display = 'flex'; // Show the loader container
+        });
+        });
+    </script>
+
+
+
+</body>
+</html>

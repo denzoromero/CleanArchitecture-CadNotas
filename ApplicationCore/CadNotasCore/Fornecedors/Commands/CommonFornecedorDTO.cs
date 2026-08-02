@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ApplicationCore.CadNotasCore.Fornecedors.Commands
+{
+    public abstract record CommonFornecedorDTO
+    {
+        public string Fornecedor { get; init; } = string.Empty;
+        public string Fantasia { get; init; } = string.Empty;
+        public string? Contato { get; init; }
+        public string IE { get; init; } = string.Empty;
+        public string CNPJ { get; init; } = string.Empty;
+        public string? Rua { get; init; }
+        public string? Numero { get; init; }
+        public string? Bairro { get; init; }
+        public int? IdCidade { get; init; }
+        public int? IdEstado { get; init; }
+        public string? Cep { get; init; }
+        public string? Telefone1 { get; init; }
+        public string? Telefone2 { get; init; }
+        public string? EMail { get; init; }
+        public string? HomePage { get; init; }
+    }
+}

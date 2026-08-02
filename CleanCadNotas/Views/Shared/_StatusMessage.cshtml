@@ -1,0 +1,15 @@
+﻿@model StatusMessageViewModel?
+
+@if (Model is not null && Model.Messages.Any() == true)
+{
+    var cssClass = Model.IsSuccess ? "alert-success": "alert-danger";
+    <div class="alert @cssClass alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @foreach (string error in Model.Messages)
+        {
+            <ul>
+                <li>@error</li>
+            </ul>            
+        }
+    </div>
+}

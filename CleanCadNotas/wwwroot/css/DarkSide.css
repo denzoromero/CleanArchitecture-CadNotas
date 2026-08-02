@@ -1,0 +1,111 @@
+﻿body[data-theme="dark"] {
+    background-color: #353839; /*Off Dark hex*/
+    color: #f9f9f9; /*Off White hex*/
+}
+
+
+    /****************************************        Nav Bar    ************************************************************/
+    body[data-theme="dark"] ul .NavBarMenu {
+        background-color: dimgray; /*Off Dark hex*/
+        color: #f9f9f9; /*Off White hex*/
+        border: 2px solid #f9f9f9;
+    }
+
+        body[data-theme="dark"] ul .NavBarMenu a {
+            color: #f9f9f9; /* Off White hex */
+            text-decoration:underline;
+        }
+
+            body[data-theme="dark"] ul .NavBarMenu a:hover {
+                color: black; /* Light Gray hex for hover effect */
+            }
+
+
+    body[data-theme="dark"] .dropdown-submenu .dropdown-menu {
+        background-color: dimgray;
+    }
+
+    /****************************************        Icons    ************************************************************/
+
+    body[data-theme="dark"] .SwitchingIcons {
+        filter: invert(1); /* This inverts the color, making dark images light */
+    }
+
+    body[data-theme="dark"] .ButtonOutline:hover .SwitchingIcons {
+        filter: none;
+    }
+
+
+  /****************************************        breadcrumb    ************************************************************/
+    body[data-theme="dark"] .breadcrumb .breadcrumb-item {
+        color: #f9f9f9;
+    }
+
+        body[data-theme="dark"] .breadcrumb .breadcrumb-item.active {
+            color: #f9f9f9;
+            font-weight: bolder;
+        }
+
+        body[data-theme="dark"] .breadcrumb .breadcrumb-item::before {
+            color: #f9f9f9;
+        }
+
+
+    /****************************************        Modal    ************************************************************/
+    body[data-theme="dark"] .modal .modal-header .btn-close {
+        background-color: #f9f9f9 !important;
+    }
+
+
+
+/****************************************        Table    ************************************************************/
+/*    body[data-theme="dark"] .table  {
+        color: #f9f9f9;
+    }*/
+
+
+
+/****************************************        Label    ************************************************************/
+
+body[data-theme="dark"] .ObligatoryLabel {
+    color: #fff700 !important;
+    text-decoration: underline !important;
+}
+
+
+    /****************************************        Buttons    ************************************************************/
+
+/*    body[data-theme="dark"] .btn-outline-warning {
+        color: #fff700 !important;
+    }*/
+
+
+
+/****************************************     TABS    ************************************************************/
+
+    body[data-theme="dark"] .HeaderButton {
+        color: #212529;
+        font-weight:bold;
+    }
+
+    body[data-theme="dark"] .HeaderButton.active{
+        background-color:#212529;
+        color:antiquewhite;
+        border:none;
+    }
+
+    body[data-theme="dark"] .TabBody.active {
+        background-color: #212529;
+        color: antiquewhite;
+    }
+
+    body[data-theme="dark"] .tab-content {
+        background-color: #212529;
+        color: antiquewhite;
+    }
+
+    body[data-theme="dark"] .nav-tabs .nav-link:hover,
+    .nav-tabs .nav-link:focus,
+    .nav-tabs .nav-link:active {
+        border-color: black; /* Change border color to black on hover, focus, and active */
+    }

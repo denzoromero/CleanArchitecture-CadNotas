@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CleanCadNotas</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/CleanCadNotas.styles.css" asp-append-version="true" />
+    <link href="~/css/lightside.css" rel="stylesheet" />
+    <link href="~/css/darkside.css" rel="stylesheet" />
+    <link href="~/css/lightbox.css" rel="stylesheet" />
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <header>
+        <nav class="navbar navbar-expand navbar-toggleable border-bottom box-shadow mb-3 MainNavBar">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CadNotas - Cadastro de Notas Fiscais</a>
+                <div class="d-flex">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Menu
+                            </a>
+                            <ul class="dropdown-menu NavBarMenu">
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item d-flex align-content-center" href="#">Tabelas Auxiliares<img src="~/images/caret-right-fill.svg" class="SwitchingIcons" /></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="Fornecedor" asp-action="Index">Fornecedor</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Transportadora" asp-action="Index">Transportadora</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Obra" asp-action="Index">Centro de Custo</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Material" asp-action="Index">Material</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Projeto" asp-action="Index">Projeto</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Disciplina" asp-action="Index">Disciplina</a></li>
+                                        <li><a class="dropdown-item" asp-controller="TipoOC" asp-action="Index">Tipo de OC</a></li>
+                                        <li><a class="dropdown-item" asp-controller="MaterialCLVM" asp-action="Index">Material CLVM</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Procedimento" asp-action="Index">Procedimento</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse justify-content-end">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Logout">Sair</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+    <main role="main" class="pb-3 flex-grow-1">
+        <div class="container-fluid">
+            <div id="liveAlertPlaceholder" class="sticky-alert"></div>
+            <partial name="_StatusMessage" model="@ViewBag?.StatusMessage" />
+            <partial name="_Breadcrumb" model="@ViewData["Title"]" />
+            @RenderBody()
+        </div>
+
+    </main>
+    <footer class="border-top footer text-muted MainFooter">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div>
+                © 2026 - CadNotas - Developed by DJR
+            </div>
+            <div class="form-check form-switch d-flex justify-content-between align-items-center justify-content-center">
+                <input class="form-check-input" type="checkbox" role="switch" id="theme-toggle" onclick="toggleTheme()">
+                <label class="form-check-label" for="theme-toggle" id="theme-label"></label>
+                <img src="~/images/brightness-high-fill.svg" id="theme-icon" />
+            </div>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

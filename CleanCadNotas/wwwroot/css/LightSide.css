@@ -1,0 +1,58 @@
+﻿body[data-theme="light"] {
+    background-color: #f5f5f5; /*Off White*/
+    color: #353839; /*Off Black*/
+}
+
+    body[data-theme="light"] .ButtonOutline:hover .SwitchingIcons {
+        filter: invert(1);
+    }
+
+    /****************************************        breadcrumb    ************************************************************/
+    body[data-theme="light"] .breadcrumb .breadcrumb-item {
+        color: #353839;
+    }
+
+        body[data-theme="light"] .breadcrumb .breadcrumb-item.active {
+            color: black;
+            font-weight: bold;
+        }
+
+
+
+/****************************************        Label    ************************************************************/
+
+    body[data-theme="light"] .ObligatoryLabel {
+        color: #ff4500 !important;
+        text-decoration: underline !important;
+    }
+
+/****************************************     TABS    ************************************************************/
+
+    body[data-theme="light"] .HeaderButton {
+        color: black;
+        font-weight: bold;
+    }
+
+        body[data-theme="light"] .HeaderButton.active {
+            background-color: white;
+            color: black;
+            border: none;
+        }
+
+    body[data-theme="light"] .TabBody.active {
+        background-color: white;
+        color: black;
+    }
+
+    body[data-theme="light"] .nav-tabs .nav-link:hover,
+    .nav-tabs .nav-link:focus,
+    .nav-tabs .nav-link:active {
+        border-color: white; /* Change border color to black on hover, focus, and active */
+    }
+
+
+/****************************************        Buttons    ************************************************************/
+
+/*    body[data-theme="light"] .btn-outline-warning {
+        color: black !important;
+    }*/
