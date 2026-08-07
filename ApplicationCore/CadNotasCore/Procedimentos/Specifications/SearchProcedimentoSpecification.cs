@@ -23,8 +23,10 @@ namespace ApplicationCore.CadNotasCore.Procedimentos.Specifications
                          .Select(i => new ProcedimentoVM
                          {
                              Id = i.Id,
+                             IdObra = i.Obra != null ? i.Obra.Id : null,
                              Obra = i.Obra != null ? i.Obra.Obra : null,
                              Procedimento = i.Procedimento,
+                             Revisao = i.Revisao
                          });
         }
 

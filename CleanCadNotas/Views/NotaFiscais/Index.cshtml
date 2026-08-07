@@ -1,0 +1,264 @@
+﻿@using ApplicationCore.Common
+@{
+    ViewData["Title"] = "Notas Fiscais";
+}
+
+<form id="modalForm">
+    <div class="modal fade" id="InsertLVMModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nota Fiscal</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex flex-column align-items-center">
+
+                    <div class="row w-100 mb-3">
+                        <div class="card-body border">
+                            <div class="card-header border bg-secondary text-white">
+                                <label class="col-form-label ms-4 fw-bold">Contrato</label>
+                            </div>
+                            <div class="row mt-2 mb-2">
+                                <label for="Material" class="col-2 col-form-label text-end fw-bold">Centro de Custo:</label>
+                                <div class="col-4">
+                                    <input type="hidden" id="Id" name="Id">
+                                    <input type="hidden" id="idempotencyKey" name="IdempotencyKey">
+                                    <select class="form-select" id="ddlObraLVM" name="IdObra">
+                                        <option value="0" selected>Selecione...</option>
+                                        @if (ViewBag.ObraList != null && ViewBag.ObraList.Count > 0)
+                                        {
+                                            @foreach (DropdownListVM value in ViewBag.ObraList as IEnumerable<DropdownListVM>)
+                                            {
+                                                <option value="@value.Id">@value.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mt-2 mb-2 d-flex align-items-center">
+                                <label for="Procedimento" class="col-2 col-form-label text-end fw-bold">Requer LVM?:</label>
+                                <div class="col-4">
+                                    <input class="form-check-input RequerLVM" type="radio" name="Requer" id="RequerSim" value="1">
+                                    <label class="form-check-label" for="RequerSim">
+                                        Sim
+                                    </label>
+                                    <input class="form-check-input RequerLVM" type="radio" name="Requer" id="RequerNao" value="2">
+                                    <label class="form-check-label" for="RequerNao">
+                                        Não
+                                    </label>
+                                    <input class="form-check-input RequerLVM" type="radio" name="Requer" id="RequerJa" value="3">
+                                    <label class="form-check-label" for="RequerJa">
+                                        Ja Existe
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row w-100 mb-3">
+                        <div class="card-body border">
+                            <div class="card-header border bg-secondary text-white">
+                                <label class="col-form-label ms-4 fw-bold">Dados da Nota</label>
+                            </div>
+                            <div class="row mt-4 mb-2 d-flex align-items-center">
+                                <label for="Mascara" class="col-2 col-form-label text-end fw-bold">Máscara:</label>
+                                <div class="col-2">
+                                    <input class="form-control" type="hidden" id="MascaraLVM" name="MascaraLVM">
+                                    <label class="col-form-label text-end fw-bold" id="LabelMascaraLVM"></label>
+                                </div>
+                                <label for="NLVM" class="col-2 col-form-label text-end fw-bold">Nº LVM:</label>
+                                <div class="col-2">
+                                    <input class="form-control" type="hidden" id="NLVM" name="NLVM">
+                                    <label for="NLVMValue" class="col-form-label text-end fw-bold" id="NoLVM"></label>
+                                    <select class="form-select visually-hidden" id="NLVMSelect" onchange="ddlNoLVMChange(this)">
+                                        <option value="0" selected>Selecione...</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="NotaFiscal" class="col-2 col-form-label text-end fw-bold">Nota Fiscal/DI:</label>
+                                <div class="col-3">
+                                    <input class="form-control" id="NotaFiscal" name="NotaFiscal">
+                                </div>
+                                <label for="Documento" class="col-2 col-form-label text-end fw-bold">Chave de Acesso:</label>
+                                <div class="col-3">
+                                    <input class="form-control" id="Documento" name="Documento">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="Data" class="col-2 col-form-label text-end fw-bold">Data Receb. Estaleiro:</label>
+                                <div class="col-3">
+                                    <input class="form-control" type="date" id="Data" name="Data">                                
+                                </div>
+                                <label for="Mascara" class="col-2 col-form-label text-end fw-bold">Fornecedor:</label>
+                                <div class="col-3">
+                                    <select class="form-select" name="IdFornecedor" id="ddlFornecedor">
+                                        <option value="0" selected>Selecione...</option>
+                                        @if (ViewBag.FornecedorList != null && ViewBag.FornecedorList.Count > 0)
+                                        {
+                                            @foreach (DropdownListVM value in ViewBag.FornecedorList as IEnumerable<DropdownListVM>)
+                                            {
+                                                <option value="@value.Id">@value.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="OC" class="col-2 col-form-label text-end fw-bold">OC:</label>
+                                <div class="col-3">
+                                    <input class="form-control" id="OC" name="OC">
+                                </div>
+                                <label for="RM" class="col-2 col-form-label text-end fw-bold">Invoice:</label>
+                                <div class="col-3">
+                                    <input class="form-control" id="RM" name="RM">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="RC" class="col-2 col-form-label text-end fw-bold">QtdeItens:</label>
+                                <div class="col-3">
+                                    <input class="form-control" id="RC" name="RC">
+                                </div>
+                                <label for="IdMaterial" class="col-2 col-form-label text-end fw-bold">Material:</label>
+                                <div class="col-3">
+                                    <select class="form-select" name="IdMaterial" id="ddlMaterial">
+                                        <option value="0" selected>Selecione...</option>
+                                        @if (ViewBag.MaterialList != null && ViewBag.MaterialList.Count > 0)
+                                        {
+                                            @foreach (DropdownListVM value in ViewBag.MaterialList as IEnumerable<DropdownListVM>)
+                                            {
+                                                <option value="@value.Id">@value.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="IdDisciplina" class="col-2 col-form-label text-end fw-bold">Disciplina:</label>
+                                <div class="col-3">
+                                    <select class="form-select" name="IdDisciplina" id="ddlDisciplina">
+                                        <option value="0" selected>Selecione...</option>
+                                        @if (ViewBag.DisciplinaList != null && ViewBag.DisciplinaList.Count > 0)
+                                        {
+                                            @foreach (DropdownListVM value in ViewBag.DisciplinaList as IEnumerable<DropdownListVM>)
+                                            {
+                                                <option value="@value.Id">@value.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                                <label for="IdTipoOC" class="col-2 col-form-label text-end fw-bold">Tipo de OC:</label>
+                                <div class="col-3">
+                                    <select class="form-select" name="IdTipoOC" id="ddlTipoOC">
+                                        <option value="0" selected>Selecione...</option>
+                                        @if (ViewBag.TipoOCList != null && ViewBag.TipoOCList.Count > 0)
+                                        {
+                                            @foreach (DropdownListVM value in ViewBag.TipoOCList as IEnumerable<DropdownListVM>)
+                                            {
+                                                <option value="@value.Id">@value.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="Valor" class="col-2 col-form-label text-end fw-bold">Valor (R$):</label>
+                                <div class="col-3">
+                                    <input class="form-control" type="text" id="Valor" name="Valor" inputmode="decimal" placeholder="0,00">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="row mt-2 mb-2">
+                                    <label for="Obs" class="col-2 col-form-label text-end fw-bold">Obs:</label>
+                                    <div class="col-8">
+                                        <textarea class="form-control" id="Obs" rows="3" name="Obs"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button id="submitBtn" type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form method="get" id="searchForm">
+    <div class="container">
+        <div class="row mb-2">
+            <label for="Filtro" class="col-3 col-form-label text-end LabelName">Centro de Custo:</label>
+            <div class="col-4">
+                <select class="form-select" name="IdObra">
+                    <option value="0" selected>Selecione...</option>
+                    @if (ViewBag.ObraList != null && ViewBag.ObraList.Count > 0)
+                    {
+                        @foreach (DropdownListVM value in ViewBag.ObraList as IEnumerable<DropdownListVM>)
+                        {
+                            <option value="@value.Id">@value.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <label for="Filtro" class="col-3 col-form-label text-end LabelName">Filtro:</label>
+            <div class="col-4">
+                <input class="form-control" id="Filtro" name="Filter">
+            </div>
+        </div>
+        <div class="row mb-2 d-flex align-items-center">
+            <label for="Registro" class="col-3 col-form-label text-end LabelName">Registro:</label>
+            <div class="col-4">
+                <input class="form-check-input" type="checkbox" id="Registro" name="Ativo" checked>
+            </div>
+        </div>
+
+        <div class="row mb-2 d-flex align-items-center">
+            <label class="col-3"></label> 
+            <div class="col-4 d-flex justify-content-start">
+                <button type="submit" class="btn ButtonOutline me-2 d-flex justify-content-center align-content-center ShowSearchAnimation"><img src="~/images/search.svg" class="SwitchingIcons" /> &nbsp;Buscar</button>
+                <button id="btnNewInsert" type="button" class="btn ButtonOutline d-flex justify-content-center align-content-center" data-bs-toggle="modal" data-bs-target="#InsertLVMModal">
+                    <img src="~/images/plus-lg.svg" class="SwitchingIcons" /> &nbsp;Novo
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="container">
+    <div class="row mb-3">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th class="text-center align-middle sap-code">Centro de Custo</th>
+                    <th class="text-center align-middle">NumeroLVM</th>
+                    <th class="text-center align-middle sap-code">LVM</th>
+                    <th class="text-center align-middle">Data</th>
+                    <th class="text-center align-middle">NotaFiscal</th>
+                    <th class="text-center align-middle">OC</th>
+                    <th class="text-center align-middle">Invoice</th>
+                    <th class="text-center align-middle">QtdeItens</th>
+                    <th class="text-center align-middle">Material</th>
+                    <th class="text-center align-middle">Disciplina</th>
+                    <th class="text-center align-middle sap-code">Tipo de OC</th>
+                    <th class="text-center align-middle" style="width: 20px;"></th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<nav class="pageNav">
+    <ul class="pagination justify-content-center" id="paginationControls">
+    </ul>
+</nav>
+
+<script src="~/js/notafiscais.js"></script>

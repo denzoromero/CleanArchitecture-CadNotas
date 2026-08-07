@@ -5,6 +5,7 @@ using Domain.Entities.EntitiesCad.ECadObra;
 using Domain.Entities.EntitiesCad.ECadProjeto;
 using Domain.Entities.EntitiesCad.ECadTransportadora;
 using Domain.Entities.EntitiesCad.EObraVSProjeto;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -81,7 +82,6 @@ namespace Infrastructure.DataCad
                     await contextCad.SaveChangesAsync();
                 }
 
-
                 if (!await contextCad.CadMaterialCLVMs.AnyAsync())
                 {
                     await contextCad.CadMaterialCLVMs.AddRangeAsync(GetPreconfiguredMaterialCLVM());
@@ -92,6 +92,20 @@ namespace Infrastructure.DataCad
                 if (!await contextCad.CadProcedimentos.AnyAsync())
                 {
                     await contextCad.CadProcedimentos.AddRangeAsync(GetPreconfiguredProcedimentos());
+
+                    await contextCad.SaveChangesAsync();
+                }
+
+                if (!await contextCad.CadLVMs.AnyAsync())
+                {
+                    await contextCad.CadLVMs.AddRangeAsync(GetPreconfiguredLVMs());
+
+                    await contextCad.SaveChangesAsync();
+                }
+
+                if (!await contextCad.CadClvms.AnyAsync())
+                {
+                    await contextCad.CadClvms.AddRangeAsync(GetPreconfiguredCLVMs());
 
                     await contextCad.SaveChangesAsync();
                 }
@@ -194,6 +208,20 @@ namespace Infrastructure.DataCad
             ];
         }
 
+        static IEnumerable<CadLVM> GetPreconfiguredLVMs()
+        {
+            return [
+                new(1, new DateTime(2025, 1, 15)),
+                new(2, DateTime.Now),
+            ];
+        }
+        static IEnumerable<CadClvm> GetPreconfiguredCLVMs()
+        {
+            return [
+                new(1,1,"BB-80.01.02.73681",new DateTime(2025, 1, 15), ClvmStatus.Reprovado,1,1),
+                new(2,1,"BB-80.01.02.123456",new DateTime(2025, 1, 15), ClvmStatus.Reprovado,1,2),
+            ];
+        }
 
 
 

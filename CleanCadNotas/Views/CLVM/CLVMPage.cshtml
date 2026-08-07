@@ -1,0 +1,432 @@
+﻿@using ApplicationCore.CadNotasCore.CLVMs.VMs
+@using ApplicationCore.CadNotasCore.NotaFiscaisCore.Queries.VMs
+@using ApplicationCore.Common
+@using ApplicationCore.Interfaces
+@using Domain.Enums
+@inject IUser UserInfo
+@{
+    ViewData["Title"] = "CadCLVM";
+}
+
+<div class="modal fade" id="MaterialModalList" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" id="dismissMaterialModal" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <table class="table table-hover" id="MaterialListTable">
+                        <thead>
+                            <tr>
+                                <td></td>
+                                <th class="text-center align-middle">Codigo</th>
+                                <th class="text-center align-middle">Descricao</th>
+                            </tr>
+                        </thead>
+                        <tbody id="materialTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (ViewBag.LVM != null)
+{
+    NotaFiscaisCLVM? values = ViewBag.LVM as NotaFiscaisCLVM;
+<form id="editProcedimentoForm" method="post">
+<div class="container">
+    <div class="row w-100 mb-3">
+        <div class="card-body border">
+            <div class="card-header border bg-secondary text-white">
+                <label class="col-form-label ms-4 fw-bold">Contrato</label>
+            </div>
+            <div class="row mt-2 mb-2">
+                <label class="col-2 col-form-label text-end fw-bold">Centro de Custo:</label>
+                <div class="col-4">
+                    <label class="col-form-label text-end fw-bold">@values?.Obra</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row w-100 mb-3">
+        <div class="card-body border">
+            <div class="card-header border bg-secondary text-white">
+                <label class="col-form-label ms-4 fw-bold">Dados da Nota</label>
+                <input type="hidden" id="idempotencyKeyProcedimento" name="IdempotencyKey" value="@ViewBag.IdempotencyKey">
+                <input class="form-control" type="hidden" name="Id" value="@values?.Id">
+                <input class="form-control" type="hidden" id="IdLVM" name="IdLVM" value="@values?.Id">
+                <input class="form-control" type="hidden" id="CodObra" name="CodObra" value="@values?.IdObra">
+                <input class="form-control" type="hidden" id="LVMOrigem" name="LVMOrigem" value="@values?.MascaraLVM">
+            </div>
+            <div class="row mt-2 mb-2">
+                <label class="col-2 col-form-label text-end fw-bold">Máscara:</label>
+                <div class="col-2">
+                    <label class="col-form-label text-end fw-bold">@values?.MascaraLVM</label>
+                </div>
+                <label class="col-2 col-form-label text-end fw-bold">Nº LVM:</label>
+                <div class="col-2">
+                    <label class="col-form-label text-end fw-bold">@values?.NLVM</label>
+                </div>
+                <label class="col-2 col-form-label text-end fw-bold"></label>
+                <div class="col-2">
+                    <label class="col-form-label text-end fw-bold"></label>
+                </div>
+            </div>
+
+            <div class="row mt-2 mb-2">
+                <label class="col-2 col-form-label text-end fw-bold">Nota Fiscal:</label>
+                <div class="col-2">
+                    <label class="col-form-label text-end fw-bold">@values?.NotaFiscal</label>
+                </div>
+                <label class="col-2 col-form-label text-end fw-bold">Data:</label>
+                <div class="col-2">
+                    <label class="col-form-label text-end fw-bold">@values?.DataString</label>
+                </div>
+            </div>
+
+            <div class="row mt-2 mb-2">
+                <label class="col-2 col-form-label text-end fw-bold">Fornecedor:</label>
+                <div class="col-2">
+                    <label class="col-form-label text-end fw-bold">@values?.Fornecedor</label>
+                </div>
+                <label class="col-2 col-form-label text-end fw-bold">OC:</label>
+                <div class="col-2">
+                    <label class="col-form-label text-end fw-bold">@values?.OC</label>
+                </div>
+                <label class="col-2 col-form-label text-end fw-bold">Invoice:</label>
+                <div class="col-2">
+                            <label class="col-form-label text-end fw-bold">@values?.Invoice</label>
+                </div>
+            </div>
+
+            <div class="row mt-2 mb-2">
+                <label class="col-2 col-form-label text-end fw-bold">QtdeItens:</label>
+                <div class="col-2">
+                            <label class="col-form-label text-end fw-bold">@values?.QtdItem</label>
+                </div>
+                <label class="col-2 col-form-label text-end fw-bold">Material:</label>
+                <div class="col-2">
+                    <label class="col-form-label text-end fw-bold">@values?.Material</label>
+                </div>
+                <label class="col-2 col-form-label text-end fw-bold">Transportadora:</label>
+                <div class="col-2">
+                    <label class="col-form-label text-end fw-bold">@values?.Transportadora </label>
+                </div>
+            </div>
+
+            <div class="row mt-2 mb-2">
+                <label class="col-2 col-form-label text-end fw-bold">Disciplina:</label>
+                <div class="col-2">
+                    <label class="col-form-label text-end fw-bold">@values?.Disciplina</label>
+                </div>
+                <label class="col-2 col-form-label text-end fw-bold"> Tipo de OC:</label>
+                <div class="col-2">
+                    <label class="col-form-label text-end fw-bold">@values?.TipoOC</label>
+                </div>
+                <label class="col-2 col-form-label text-end fw-bold">Procedimento:</label>
+                <div class="col-2">
+                    <select class="form-select" name="IdProcedimento">
+                        <option value="0">Selecione...</option>
+                        @if (ViewBag.Procedimentos != null && ViewBag.Procedimentos.Count > 0)
+                        {
+                            
+                            @foreach (DropdownListVM value in ViewBag.Procedimentos as IEnumerable<DropdownListVM>)
+                            {
+                                @* var isSelected = values?.IdProcedimento == value.Id ? "selected" : "";
+                                <option value="@value.Id" isSelected>@value.Name</option> *@
+
+                                        <option value="@value.Id" selected="@(values?.IdProcedimento == value.Id)">
+                                            @value.Name
+                                        </option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row mt-2 mb-2">
+                <label class="col-2 col-form-label text-end fw-bold">Obs:</label>
+                <div class="col-8">
+                    <label class="col-form-label text-end fw-bold">@values?.Obs </label>
+                </div>
+            </div>
+
+            <div class="row mt-2 mb-2 me-4">
+                <div class="col-12 d-flex justify-content-end">
+                    <button id="submitProcedimentoBtn" type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row w-100 mb-3">
+        <div class="d-flex justify-content-start align-items-start">
+            @*  <button type="button" class="btn btn-secondary d-flex justify-content-center align-content-center me-5" onclick="goBackToIndexWithFilter(@ViewBag?.Filter?.IdObra, '@ViewBag?.Filter?.Filtro')">
+                <img src="~/images/arrow-left.svg" /> &nbsp;Voltar Filter:@(ViewBag?.Filter?.IdObra + "-" + ViewBag?.Filter?.Filtro)
+            </button> *@
+                    <button type="button" class="btn btn-secondary d-flex justify-content-center align-content-center me-5" asp-action="Index">
+                <img src="~/images/arrow-left.svg" /> &nbsp;Voltar
+            </button>
+            <button type="button" id="btnNewInsert" class="btn ButtonOutline d-flex justify-content-center align-content-center" data-bs-toggle="modal" data-bs-target="#InsertCLVMModal">
+                <img src="~/images/plus-lg.svg" class="SwitchingIcons" /> &nbsp;Incluir CLVM
+            </button>
+        </div>
+    </div>
+</div>
+</form>
+}
+
+<form id="modalForm">
+    <div class="modal fade" id="InsertCLVMModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">CLVM</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row w-100 mb-3">
+                        <div class="row mb-3">
+                            <label for="Item" class="col-2 col-form-label text-end fw-bold ObligatoryLabel">Item:</label>
+                            <div class="col-2">
+                                <input type="hidden" id="idempotencyKey" name="IdempotencyKey">
+                                <input type="hidden" id="Id" name="Id">
+                                <input class="form-control decimalinputs" id="Item" name="Item">
+                            </div>
+                            <label for="Codigo" class="col-2 col-form-label text-end fw-bold ObligatoryLabel">Código:</label>
+                            <div class="col-4">
+                                <input class="form-control" id="CodigoCLVM" name="Codigo">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="PO" class="col-2 col-form-label text-end fw-bold ObligatoryLabel">Item da P.O:</label>
+                            <div class="col-2">
+                                <input class="form-control digitsonly" id="PO" name="PO">
+                            </div>
+                            <label class="col-2 col-form-label text-end fw-bold"></label>
+                            <div class="col-4">
+                                @* <input class="form-control" id="Codigo" name="Codigo" value="@ViewBag.InsertData?.Documento"> *@
+                            </div>
+                        </div>
+
+                        <div class="card-body border mb-4">
+                            <div class="card-header border bg-secondary text-white">
+                                <label class="col-form-label ms-4 fw-bold">Detalhes do material</label>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="row mt-2 mb-2">
+                                    <label for="Obs" class="col-2 col-form-label text-end fw-bold">Descriçao:</label>
+                                    <div class="col-8">
+                                        <input class="form-control" type="hidden"  id="IdMaterialCLVM" name="IdMaterialCLVM">
+                            
+                                        <textarea class="form-control" id="TipoComponent" rows="2" name="TipoComponente"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-2 mb-2">
+                                <label class="col-2 col-form-label text-end fw-bold">Especif. Material:</label>
+                                <div class="col-2">
+                                    <label class="col-form-label text-end" id="EspecMaterialDetail"></label>
+                                </div>
+                                <label class="col-2 col-form-label text-end fw-bold">Diametro 1:</label>
+                                <div class="col-2">
+                                    <label class="col-form-label text-end" id="Diametro1Detail"></label>
+                                </div>
+                                <label class="col-2 col-form-label text-end fw-bold">Diametro 2:</label>
+                                <div class="col-2">
+                                    <label class="col-form-label text-end" id="Diametro2Detail"></label>
+                                </div>
+                            </div>
+
+
+                            <div class="row mt-2 mb-2">
+                                <label class="col-2 col-form-label text-end fw-bold">Comprimento:</label>
+                                <div class="col-2">
+                                    <label class="col-form-label text-end" id="ComprimentoDetail"></label>
+                                </div>
+                                <label class="col-2 col-form-label text-end fw-bold">Espessura:</label>
+                                <div class="col-2">
+                                    <label class="col-form-label text-end" id="EspessuraDetail"></label>
+                                </div>
+                                <label class="col-2 col-form-label text-end fw-bold">Largura:</label>
+                                <div class="col-2">
+                                    <label class="col-form-label text-end" id="LarguraDetail"></label>
+                                </div>
+                            </div>
+
+                            <div class="row mt-2 mb-2">
+                                <label class="col-2 col-form-label text-end fw-bold">Peso:</label>
+                                <div class="col-2">
+                                    <label class="col-form-label text-end" id="PesoDetail"></label>
+                                </div>
+                                <label class="col-2 col-form-label text-end fw-bold"></label>
+                                <div class="col-2">
+                                    <label class="col-form-label text-end"></label>
+                                </div>
+                                <label class="col-2 col-form-label text-end fw-bold"></label>
+                                <div class="col-2">
+                                    <label class="col-form-label text-end"></label>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="Certificacao" class="col-2 col-form-label text-end fw-bold">Certificação:</label>
+                            <div class="col-2">
+                                <input class="form-control" id="Certificacao" name="Certificacao">
+                            </div>
+                            <label for="Corrida" class="col-2 col-form-label text-end fw-bold">Corrida:</label>
+                            <div class="col-2">
+                                <input class="form-control" id="Corrida" name="Corrida">
+                            </div>
+                            <label for="UM" class="col-2 col-form-label text-end fw-bold">Unidade Medida:</label>
+                            <div class="col-2">
+                                <select class="form-select" asp-items="Html.GetEnumSelectList<UMedida>()" name="UnidadeMedida" id="UnidadeMedida">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="Certificacao" class="col-2 col-form-label text-end fw-bold">Quantidade:</label>
+                            <div class="col-2">
+                                <input class="form-control decimalinputs" inputmode="decimal" placeholder="0,00" id="Qtd" name="Qtd">
+                            </div>
+                            <label for="Programacao" class="col-2 col-form-label text-end fw-bold">Programação:</label>
+                            <div class="col-2">
+                                @* <input class="form-control digitsonly" id="Programacao" name="Programacao"> *@
+                                <input class="form-control" type="number" id="Programacao" name="Programacao">
+                            </div>
+                            <label for="UM" class="col-2 col-form-label text-end fw-bold">Inspetor:</label>
+                            <div class="col-2">
+                                <label id="IdInspetor" class="col-form-label text-end">@UserInfo.UserId</label>
+                                @* <input class="form-control" type="hidden" name="IdInspetor"> *@
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="Certificacao" class="col-2 col-form-label text-end fw-bold ObligatoryLabel">Data Inspeção:</label>
+                            <div class="col-2">
+                                <input class="form-control" type="date" id="Certificacao" name="DtInspecao">
+                            </div>
+                            <label for="Corrida" class="col-2 col-form-label text-end fw-bold ObligatoryLabel">Status:</label>
+                            <div class="col-2">
+                                <select class="form-select" asp-items="Html.GetEnumSelectList<ClvmStatus>()" aria-label="Default select example" name="Status" id="Status">
+                                </select>
+                            </div>
+                            <label for="UM" class="col-2 col-form-label text-end fw-bold"></label>
+                            <div class="col-2">
+                                <label class="col-form-label text-end"></label>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="row mt-2 mb-2">
+                                <label for="Obs" class="col-2 col-form-label text-end fw-bold">Obs:</label>
+                                <div class="col-10">
+                                    <textarea class="form-control" id="Obs" rows="2" name="Observacao"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button id="submitBtn" type="submit" class="btn btn-primary">Salvar CLVM</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+  <div class="container-fluid">
+        <div class="row mb-3">
+        <table class="table table-hover" id="clvmTable">
+                <thead>
+                    <tr>
+                        <th class="text-center align-middle">Item</th>
+                        <th class="text-center align-middle sap-code">Codigo</th>
+                        <th class="text-center align-middle">Tipo Componente</th>
+                        <th class="text-center align-middle">Certificado</th>
+                        <th class="text-center align-middle">Corrida-Volume</th>
+                        <th class="text-center align-middle">Qtd.</th>
+                        <th class="text-center align-middle">Unid. Medida</th>
+                        <th class="text-center align-middle">LVM Origem</th>
+                        <th class="text-center align-middle">Programação</th>
+                        <th class="text-center align-middle">Status</th>
+                        <th class="text-center align-middle" style="width: 20px;"></th>
+                        <th class="text-center align-middle" style="width: 20px;"></th>
+                        <th class="text-center align-middle" style="width: 20px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (ViewBag.CLVMs != null)
+                    {
+                        @foreach (CLVMVM? value in ViewBag.CLVMs as IEnumerable<CLVMVM>)
+                        {
+                            <tr>
+                                <td class="CLVMTable">@value.Item</td>
+                                <td class="sap-code CLVMTable">@value.Codigo</td>
+                                <td class="CLVMTable">@value.TipoComponente</td>
+                                <td>@value?.Certificacao</td>
+                                <td>@value?.Corrida</td>
+                                <td>@value?.Qtd</td>
+                                <td>@value?.UnidadeMedida</td>
+                                <td>@value?.LVMOrigem</td>
+                                <td>@value?.Programacao</td>
+                                <td>
+                                    @value?.Status
+                            @*         @if (value?.Status == 1)
+                                    {
+                                        <img src="~/images/check-circle-fill.svg" />
+                                    }
+                                    else if (value?.Status == 2)
+                                    {
+                                        <img src="~/images/x-circle-fill.svg" />
+                                    }
+                                    else if (value?.Status == 3)
+                                    {
+                                        <span>Em Andamento</span>
+                                    }
+                                    else if (value?.Status == 4)
+                                    {
+                                        <img src="~/images/exclamation-triangle-fill.svg" />
+                                    }
+                                    else
+                                    {
+                                        <span>N/A</span>
+                                    } *@
+                                </td>
+                                <td style="width: 20px;">
+                                    @if (value?.TransferStatus == 0)
+                                    {
+                                        <a class="btn btn-deact btn-danger d-flex align-items-center justify-content-center" data-id="@value?.Id" "><img src="~/images/trash3-fill.svg" class="SwitchingIcons" /></a>
+                                    }
+                                    else if (value?.TransferStatus == 2)
+                                    {
+                                        <img src="~/images/x-square.svg" class="SwitchingIcons" />
+                                    }
+                                </td>
+                                <td style="width: 20px;">
+                                    <a class="btn btn-info btn-edit d-flex align-items-center justify-content-center" data-id="@value?.Id"><img src="~/images/pencil-fill.svg" class="SwitchingIcons" /></a>
+                                </td>
+                                <td style="width: 20px;">
+                                    <a class="btn btn-warning btn-transfer d-flex align-items-center justify-content-center" data-id="@value?.Id"><img src="~/images/arrow-left-right.svg" class="SwitchingIcons" /></a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                               
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+<script src="~/js/clvmpage.js"></script>

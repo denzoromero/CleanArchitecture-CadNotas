@@ -22,10 +22,23 @@ namespace CleanCadNotas.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var result = await _mediator.Send(new StateQuery());
-            ViewBag.StateList = result;
+            try
+            {
+                var result = await _mediator.Send(new StateQuery());
+                ViewBag.StateList = result;
 
-            return View();
+                return View();
+            }
+            catch (ValidationException ex)
+            {
+                ViewBag.StatusMessage = new StatusMessageViewModel(false, ex.Errors.Select(x => x.ErrorMessage));
+                return View();
+            }
+            catch (Exception ex) when (TimeoutExceptionHandler.IsSqlTimeout(ex))
+            {
+                ViewBag.StatusMessage = new StatusMessageViewModel(false, ["Execution Timeout Expired."]);
+                return View();
+            }     
         }
 
         [HttpGet]

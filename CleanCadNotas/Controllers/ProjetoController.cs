@@ -2,6 +2,7 @@
 using ApplicationCore.CadNotasCore.Projetos.Commands.Update;
 using ApplicationCore.CadNotasCore.Projetos.Queries;
 using CleanCadNotas.Configurations;
+using CleanCadNotas.Models;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -15,10 +16,23 @@ namespace CleanCadNotas.Controllers
         private readonly IMediator _mediator = mediator;
         public async Task<IActionResult> Index(GetObraList query)
         {
-            var obras = await _mediator.Send(query);
-            ViewBag.ObraList = obras;
+            try
+            {
+                var obras = await _mediator.Send(query);
+                ViewBag.ObraList = obras;
 
-            return View();
+                return View();
+            }
+            catch (ValidationException ex)
+            {
+                ViewBag.StatusMessage = new StatusMessageViewModel(false, ex.Errors.Select(x => x.ErrorMessage));
+                return View();
+            }
+            catch (Exception ex) when (TimeoutExceptionHandler.IsSqlTimeout(ex))
+            {
+                ViewBag.StatusMessage = new StatusMessageViewModel(false, ["Execution Timeout Expired."]);
+                return View();
+            } 
         }
 
         public async Task<IActionResult> Search(SearchProjetos query)

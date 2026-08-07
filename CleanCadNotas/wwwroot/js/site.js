@@ -221,6 +221,8 @@ async function fetchJson(url, options = {}) {
 
         const errorData = await response.json();
 
+        console.log(errorData);
+
         throw {
             status: response.status,
             type: errorData.type,
@@ -242,9 +244,10 @@ function handleError(error) {
             break;
 
         case "Validation":
+            console.log(error.errors);
             const errors = `
                 <ul>
-                    ${error.errors.map(x => `<li>${x}</li>`).join("")}
+                    ${error.errors.map(x => `<li>${x.errorMessage}</li>`).join("")}
                 </ul>
             `;
             appendAlertWithoutAnimation(errors,"danger");
@@ -378,6 +381,11 @@ const populateForm = (form, data) => {
                 option.selected = values.includes(Number(option.value));
             }
 
+            continue;
+        }
+
+        if (field.type === 'date' && data[key]) {
+            field.value = data[key].split('T')[0];
             continue;
         }
 

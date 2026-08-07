@@ -21,7 +21,6 @@ namespace ApplicationCore.CadNotasCore.Procedimentos.Queries
 
         public async Task<Result<PagedResult<ProcedimentoVM>>> Handle(SearchProcedimentos query, CancellationToken cancellationToken)
         {
-            var itemcheck = await _repository.ListAsync(cancellationToken);
 
             var items = await _repository.ListAsync(new SearchProcedimentoSpecification(query.Filter, query.AtivoValue, query.PageNo));
             if (items.Count == 0) return Result<PagedResult<ProcedimentoVM>>.Failure(new Error("ERR404", "No result found."));

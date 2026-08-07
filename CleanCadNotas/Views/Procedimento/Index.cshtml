@@ -1,4 +1,5 @@
-﻿@{
+﻿@using ApplicationCore.Common
+@{
     ViewData["Title"] = "Procedimento";
 }
 
@@ -21,10 +22,13 @@
                                     <input type="hidden" id="idempotencyKey" name="IdempotencyKey">
                                     <select class="form-select" id="ddlObra" name="IdObra">
                                         <option value="0" selected>Selecione...</option>
-                                  @*       @if (ViewBag.ObraList != null)
+                                        @if (ViewBag.ObraList != null && ViewBag.ObraList.Count > 0)
                                         {
-                                            @GenerateObra(ViewBag.ObraList as IEnumerable<CadObra>, ViewBag.InsertData?.IdObra)
-                                        } *@
+                                            @foreach (DropdownListVM value in ViewBag.ObraList as IEnumerable<DropdownListVM>)
+                                            {
+                                                <option value="@value.Id">@value.Name</option>
+                                            }
+                                        }
                                     </select>
                                 </div>
                             </div>

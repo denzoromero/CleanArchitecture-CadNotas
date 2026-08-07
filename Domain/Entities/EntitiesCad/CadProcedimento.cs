@@ -39,6 +39,8 @@ namespace Domain.Entities.EntitiesCad
 
         public void Update(string procedimento, int? idObra, string? revisao)
         {
+            Guard.Against.NullOrEmpty(procedimento, nameof(procedimento));
+
             Procedimento = procedimento;
             IdObra = idObra;
             Revisao = revisao;

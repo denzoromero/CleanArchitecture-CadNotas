@@ -24,7 +24,6 @@ namespace Domain.Entities.EntitiesCad.ECadObra
         private readonly List<CadProcedimento> _procedimentos = [];
         public IReadOnlyCollection<CadProcedimento> Procedimentos => _procedimentos.AsReadOnly();
 
-
         private CadObra() { }
 
         public CadObra(string obra, string cliente)

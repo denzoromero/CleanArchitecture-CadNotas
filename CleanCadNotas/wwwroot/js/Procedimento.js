@@ -63,14 +63,14 @@ const populateTable = (items) => {
 
         const blankCell = document.createElement('td');
 
-        // const editBtn = document.createElement('a');
-        // editBtn.className = 'btn btn-info d-flex align-items-center justify-content-center';
-        // editBtn.textContent = 'Edit';
-        // editBtn.addEventListener('click', (e) => {
-        //     e.preventDefault();
-        //     OpenEditFormModal(item, modalForm, submitBtn, modalElement);
-        // });
-        // blankCell.appendChild(editBtn);
+        const editBtn = document.createElement('a');
+        editBtn.className = 'btn btn-info d-flex align-items-center justify-content-center';
+        editBtn.textContent = 'Edit';
+        editBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            OpenEditFormModal(item, modalForm, submitBtn, modalElement);
+        });
+        blankCell.appendChild(editBtn);
 
         row.append(obraCell, procedimentoCell, revisaoCell, blankCell);
         tbody.appendChild(row);

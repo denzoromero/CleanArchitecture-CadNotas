@@ -2,10 +2,17 @@ using ApplicationCore;
 using CleanCadNotas.Configurations;
 using CleanCadNotas.Extensions;
 using Infrastructure;
+using System.Globalization;
 
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+var cultureInfo = new CultureInfo("pt-BR");
+cultureInfo.NumberFormat.NumberDecimalSeparator = ",";
+
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

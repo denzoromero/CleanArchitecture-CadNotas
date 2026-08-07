@@ -1,0 +1,81 @@
+﻿@using ApplicationCore.Common
+@{
+    ViewData["Title"] = "CLVM Search";
+}
+
+
+
+<form method="get" id="searchForm">
+    <div class="container">
+        <div class="row mb-2">
+            <label for="Filtro" class="col-3 col-form-label text-end LabelName">Centro de Custo:</label>
+            <div class="col-3">
+                <select class="form-select" name="IdObra">
+                    <option value="0" selected>Selecione...</option>
+                    @if (ViewBag.ObraList != null && ViewBag.ObraList.Count > 0)
+                    {
+                        @foreach (DropdownListVM value in ViewBag.ObraList as IEnumerable<DropdownListVM>)
+                        {
+                            <option value="@value.Id">@value.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <label for="Filtro" class="col-3 col-form-label text-end LabelName">Filtro:</label>
+            <div class="col-4">
+                <input class="form-control" id="Filtro" name="Filter">
+            </div>
+        </div>
+        <div class="row mb-2 d-flex align-items-center">
+            <label for="Registro" class="col-3 col-form-label text-end LabelName">Registro:</label>
+            <div class="col-4">
+                <input class="form-check-input" type="checkbox" id="Registro" name="Ativo" checked>
+            </div>
+        </div>
+
+        <div class="row mb-2 d-flex align-items-center">
+            <label class="col-3"></label> <!-- Empty label to align with previous labels -->
+            <div class="col-4 d-flex justify-content-start">
+                <button type="submit" class="btn ButtonOutline me-2 d-flex justify-content-center align-content-center ShowSearchAnimation"><img src="~/images/search.svg" class="SwitchingIcons" /> &nbsp;Buscar</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="container-fluid">
+    <div class="row mb-3 d-flex justify-content-start">
+        <label for="Filtro" class="col-1 col-form-label LabelName">Resultado:</label>
+        <div class="col-4">
+            <label for="Filtro" id="totalCountLabel" class="col-1 col-form-label text-end LabelName"></label>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th class="text-center align-middle sap-code">Centro de Custo</th>
+                    <th class="text-center align-middle">NumeroLVM</th>
+                    <th class="text-center align-middle sap-code">LVM</th>
+                    <th class="text-center align-middle">Data</th>
+                    <th class="text-center align-middle">NotaFiscal</th>
+                    <th class="text-center align-middle">OC</th>
+                    <th class="text-center align-middle">Invoice</th>
+                    <th class="text-center align-middle">QtdeItens</th>
+                    <th class="text-center align-middle">Material</th>
+                    <th class="text-center align-middle">Disciplina</th>
+                    <th class="text-center align-middle sap-code">Tipo de OC</th>
+                    <th class="text-center align-middle">CLVM</th>
+                    <th class="text-center align-middle">Exportar</th>
+                    <th class="text-center align-middle">Imprimir</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script src="~/js/clvm.js"></script>
