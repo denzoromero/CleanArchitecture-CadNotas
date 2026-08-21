@@ -32,6 +32,7 @@ namespace Infrastructure.DataCad
         public DbSet<CadProcedimento> CadProcedimentos => Set<CadProcedimento>();
         public DbSet<CadLVM> CadLVMs => Set<CadLVM>();
         public DbSet<CadClvm> CadClvms => Set<CadClvm>();
+        public DbSet<RelatorioCLVM> RelatorioCLVMs => Set<RelatorioCLVM>();
         public DbSet<IdempotencyRequest> IdempotencyRequests => Set<IdempotencyRequest>();
 
         protected override void OnModelCreating(ModelBuilder builder)

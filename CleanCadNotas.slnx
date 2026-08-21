@@ -5,4 +5,10 @@
     <Project Path="Domain/Domain.csproj" />
     <Project Path="Infrastructure/Infrastructure.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="ApplicationUnitTest/ApplicationUnitTest.csproj" Id="11d70e80-6531-40a6-9e86-fad61a47e4d6" />
+    <Project Path="DomainUnitTests/DomainUnitTests.csproj" Id="5f56368a-abb3-41bd-b5cc-286379d5de14" />
+    <Project Path="FunctionalTests/FunctionalTests.csproj" Id="3117978b-8ebb-4c1b-9173-20080d12b60b" />
+    <Project Path="InfrastructureIntegrationTests/InfrastructureIntegrationTests.csproj" Id="c4097890-4661-42af-95e5-c6165df64020" />
+  </Folder>
 </Solution>

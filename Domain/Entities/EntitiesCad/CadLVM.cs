@@ -40,6 +40,7 @@ namespace Domain.Entities.EntitiesCad
         public CadTipoOC? TipoOC { get; private set; }
         public int? IdProcedimento { get; private set; }
         public int? IdRelatorioCLVM { get; private set; }
+        public RelatorioCLVM? RelatorioCLVM { get; private set; } 
         public decimal? Valor { get; private set; }
 
         private readonly List<CadClvm> _clvms = [];
@@ -110,6 +111,10 @@ namespace Domain.Entities.EntitiesCad
             IdProcedimento = idProcedimento;
         }
 
+        public void UpdateCLVMRelatorio(int idRelatorio)
+        {
+            IdRelatorioCLVM = idRelatorio;
+        }
 
 
 

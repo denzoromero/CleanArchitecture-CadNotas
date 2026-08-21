@@ -21,7 +21,6 @@ namespace ApplicationCore.CadNotasCore.CLVMs.Queries
         private readonly IRepositoryCad<CadProcedimento> _repositoryProc = reposProc;
         public async Task<Result<CLVMPageVM>> Handle(GetCLVMPage request, CancellationToken cancellationToken)
         {
-            var lvmSample = await _repositoryLVM.GetByIdAsync(request.id, cancellationToken);
 
             var lvm = await _repositoryLVM.FirstOrDefaultAsync(new GetLVMByIdSpecification(request.id), cancellationToken);
             if (lvm is null) return Result<CLVMPageVM>.Failure(new Error("ERR404", "No result found."));

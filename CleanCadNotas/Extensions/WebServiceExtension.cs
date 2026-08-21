@@ -1,4 +1,5 @@
 ﻿using ApplicationCore.Interfaces;
+using CleanCadNotas.Interfaces;
 using CleanCadNotas.Services;
 using Infrastructure.IdempotencyServices;
 
@@ -12,6 +13,7 @@ namespace CleanCadNotas.Extensions
             builder.Services.AddScoped<IUser, UserService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped <IIdempotencyRepository,IdempotencyRepository > ();
+            builder.Services.AddScoped<IViewRenderService, ViewRenderService>();
         }
     }
 }

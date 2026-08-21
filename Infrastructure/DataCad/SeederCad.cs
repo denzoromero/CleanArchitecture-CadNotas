@@ -110,6 +110,13 @@ namespace Infrastructure.DataCad
                     await contextCad.SaveChangesAsync();
                 }
 
+                if (!await contextCad.RelatorioCLVMs.AnyAsync())
+                {
+                    await contextCad.RelatorioCLVMs.AddRangeAsync(GetPreconfiguredRelatorioCLVM());
+
+                    await contextCad.SaveChangesAsync();
+                }
+
             }
             catch (Exception ex)
             {
@@ -215,11 +222,20 @@ namespace Infrastructure.DataCad
                 new(2, DateTime.Now),
             ];
         }
+
         static IEnumerable<CadClvm> GetPreconfiguredCLVMs()
         {
             return [
                 new(1,1,"BB-80.01.02.73681",new DateTime(2025, 1, 15), ClvmStatus.Reprovado,1,1),
                 new(2,1,"BB-80.01.02.123456",new DateTime(2025, 1, 15), ClvmStatus.Reprovado,1,2),
+            ];
+        }
+
+        static IEnumerable<RelatorioCLVM> GetPreconfiguredRelatorioCLVM()
+        {
+            return [
+                new("1", RelatorioStatus.NaoConforme, 1),
+                new("2", RelatorioStatus.NaoConforme, 1),
             ];
         }
 

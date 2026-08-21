@@ -1,4 +1,133 @@
-﻿@{
+﻿@using ApplicationCore.CadNotasCore.RelatorioCLVMs.Queries.VM
+@using CleanCadNotas.Extensions
+@using Domain.Enums
+@{
     ViewData["Title"] = "Imprimir CLVM";
+
+    GetPrintCLVMPageVM? values = ViewBag.RelatorioResult as GetPrintCLVMPageVM;
 }
 
+<div class="row">
+    <div class="col-6">
+        <div class="card-body border mb-4">
+            <div class="card-header border bg-secondary text-white d-flex justify-content-center">
+                <label class="col-form-label ms-4 fw-bold">Inspetor</label>
+            </div>
+            <div class="row mt-1 mb-1">
+                <label class="col-2 col-form-label text-end fw-bold">Nome:</label>
+                <div class="col-10">
+                    <label class="col-form-label text-end" id="ComprimentoDetail">@values?.InspetorName</label>
+                </div>
+            </div>
+            <div class="row mt-1 mb-1">
+                <label class="col-2 col-form-label text-end fw-bold">Data:</label>
+                <div class="col-10">
+                    <label class="col-form-label text-end" id="ComprimentoDetail">@values?.DtInspetorString</label>
+                </div>
+            </div>
+            <div class="row mt-1 mb-2">
+                <div class="col-12 d-flex justify-content-center">
+                    <button type="submit" class="btn ButtonOutline me-2 d-flex align-content-center" onclick="confirmChangeInspetor(@values?.Id);"><img src="~/images/arrow-repeat.svg" class="SwitchingIcons" /> &nbsp;Mudar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card-body border mb-4">
+            <div class="card-header border bg-secondary text-white d-flex justify-content-center">
+                <label class="col-form-label ms-4 fw-bold">Verificador</label>
+            </div>
+            <div class="row mt-1 mb-1">
+                <label class="col-2 col-form-label text-end fw-bold">Nome:</label>
+                <div class="col-10">
+                    <label class="col-form-label text-end" id="ComprimentoDetail">@values?.VerificadorName</label>
+                </div>
+            </div>
+            <div class="row mt-1 mb-1">
+                <label class="col-2 col-form-label text-end fw-bold">Data:</label>
+                <div class="col-10">
+                    <label class="col-form-label text-end" id="ComprimentoDetail">@values?.DtVerificadorString</label>
+                </div>
+            </div>
+            <div class="row mt-1 mb-2">
+                <div class="col-12 d-flex justify-content-center">
+                    <button type="submit" class="btn ButtonOutline me-2 d-flex align-content-center" onclick="confirmChangeVerificador(@values?.Id);"><img src="~/images/arrow-repeat.svg" class="SwitchingIcons" /> &nbsp;Mudar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form id="generateReportForm" method="post">
+    <div class="container">
+        <div class="row mb-3">
+            <div class="row mt-2 mb-2">
+                <label for="Obs" class="col-1 col-form-label text-end fw-bold">Obs:</label>
+                <div class="col-10">
+                    <textarea class="form-control" id="Obs" rows="2" name="Observacao">@values?.Observacao</textarea>
+                    <input class="form-control" type="hidden" name="IdLVM" id="HiddenIdLVM" value="@values?.IdLVM">
+                    <input class="form-control" type="hidden" name="IdRelatorio" value="@values?.Id">
+               @*      <input type="hidden" name="InspetorName" value="@values?.InspetorName">
+                    <input type="hidden" name="DtInspetor" value="@values?.DtInspetor">
+                    <input type="hidden" name="VerificadorName" value="@values?.VerificadorName">
+                    <input type="hidden" name="DtVerificarString" value="@values?.DtVerificadorString"> *@
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="row mt-2 mb-2 d-flex align-items-center">
+                <label for="Obs" class="col-1 col-form-label text-end fw-bold">Status:</label>
+                <div class="col-10">
+                    @foreach (RelatorioStatus status in Enum.GetValues<RelatorioStatus>())
+                    {
+                        if (status == RelatorioStatus.None)
+                            continue;
+
+                        <div class="form-check">
+                            <input name="Status"
+                                   class="form-check-input"
+                                   type="radio"
+                                   value="@((int)status)" />
+
+                            <label class="form-check-label">
+                                @status.GetDisplayName()
+                            </label>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="row mt-2 mb-2 d-flex align-items-center">
+                <label for="Obs" class="col-1 col-form-label text-end fw-bold">Assinatura:</label>
+                <div class="col-10">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="Assinatura" value="1" checked>
+                        <label class="form-check-label" for="exampleRadios1">
+                            Sem Assinatura
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="Assinatura" value="2">
+                        <label class="form-check-label" for="exampleRadios2">
+                            Com Assinatura
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <label class="col-1"></label> <!-- Empty label to align with previous labels -->
+            @*<div class="col-4 d-flex justify-content-start">
+            <button type="submit" class="btn ButtonOutline me-2 d-flex justify-content-center align-content-center"><img src="~/images/download.svg" class="SwitchingIcons" /> &nbsp;Baixar Relatorio</button>
+        </div>*@
+            <div class="col-4 d-flex justify-content-start">
+                <button type="submit" id="btnSubmit" class="btn ButtonOutline me-2 d-flex justify-content-center align-content-center"><img src="~/images/download.svg" class="SwitchingIcons" /> &nbsp;Baixar Broken Relatorio</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script src="~/js/printclvm.js"></script>

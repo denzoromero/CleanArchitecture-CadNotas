@@ -1,0 +1,477 @@
+﻿@using ApplicationCore.CadNotasCore.CLVMs.VMs
+@{
+    ViewData["Title"] = "CadRDFA";
+}
+
+
+<form asp-action="InsertRDFA" method="post">
+    <div class="modal fade" id="InsertRDFAModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">RDFA</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row w-100 mb-3">
+                        <div class="row mb-3">
+                            <label for="Item" class="col-2 col-form-label text-end fw-bold">Item:</label>
+                            <div class="col-8">
+                                <label class="col-form-label text-end fw-bold" id="ItemHolder"></label>
+                            @*     <input type="hidden" name="selectedIds" id="selectedIds"> *@
+
+ @*                                <input class="form-control" type="hidden" name="IdLVM" value="@ViewBag?.ValueOfLVM?.Id">
+                                <input class="form-control" type="hidden" name="MascaraLVM" value="@ViewBag?.ValueOfLVM?.MascaraLVM"> *@
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="PO" class="col-2 col-form-label text-end fw-bold ObligatoryLabel">Nº RDFA:</label>
+                            <div class="col-2">
+                                <input class="form-control digitsonly" id="NoRDFA" name="NoRDFA" value="@(!string.IsNullOrEmpty(ViewBag.NoRDFAValue) ? ViewBag.NoRDFAValue : ViewBag.InsertData?.NoRDFA)" @(!string.IsNullOrEmpty(ViewBag.NoRDFAValue) || ViewBag.InsertData?.FirstPost == false ? "disabled" : "")>
+                                @if (!string.IsNullOrEmpty(ViewBag.NoRDFAValue))
+                                {
+                                    <input class="form-control" type="hidden" name="NoRDFA" value="@ViewBag.NoRDFAValue">
+                                    <input class="form-control" type="hidden" name="FirstPost" value="False">
+                                }
+                                else
+                                {
+                                    <input class="form-control" type="hidden" name="FirstPost" value="true">
+                                }
+                                @* <input class="form-control" type="hidden" name="NoRDFA" value="@ViewBag.NoRDFAValue"> *@
+                            </div>
+                            <label class="col-2 col-form-label text-end fw-bold ObligatoryLabel">Nº Pendência: </label>
+                            <div class="col-2">
+                                <input class="form-control digitsonly" id="NoPendencia" name="NoPendencia" value="@(ViewBag.NoPendenciaValue != null ? ViewBag.NoPendenciaValue : ViewBag.InsertData?.NoPendencia)" @(ViewBag.NoPendenciaValue != null ? "disabled" : "")>
+                                @if (ViewBag.NoPendenciaValue != null)
+                                {
+                                    <input class="form-control" type="hidden" name="NoPendencia" value="@ViewBag.NoPendenciaValue">
+                                }
+
+                            </div>
+                            <label class="col-2 col-form-label text-end fw-bold ObligatoryLabel"> </label>
+                            <div class="col-2">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="PO" class="col-2 col-form-label text-end fw-bold ObligatoryLabel">Tipo de Pendência:</label>
+                            <div class="col-2">
+                                <select class="form-select" aria-label="Default select example" name="TipoPendencia" id="TipoPendencia">
+                                    <option value="0" selected>Selecionar...</option>
+                                    <option value="1">Impeditiva</option>
+                                    <option value="2">Não Impeditiva</option>
+                                </select>
+                            </div>
+                            <label class="col-2 col-form-label text-end fw-bold ObligatoryLabel">Falta Documental: </label>
+                            <div class="col-2">
+                                <select class="form-select" aria-label="Default select example" name="FaltaDocumental" id="FaltaDocumental">
+                                    <option value="0" selected>Selecionar...</option>
+                                    <option value="1">Divergencia</option>
+                                    <option value="2">Falta</option>
+                                    <option value="3">N/A</option>
+                                </select>
+                            </div>
+                            <label class="col-2 col-form-label text-end fw-bold ObligatoryLabel"> Falta Física: </label>
+                            <div class="col-2">
+                                <select class="form-select" aria-label="Default select example" name="FaltaFisica" id="FaltaFisica">
+                                    <option value="0" selected>Selecionar...</option>
+                                    <option value="1">Divergencia</option>
+                                    <option value="2">Avariado</option>
+                                    <option value="3">Falta</option>
+                                    <option value="4">N/A</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="PO" class="col-2 col-form-label text-end fw-bold ObligatoryLabel">Data Inspeção:</label>
+                            <div class="col-2">
+                                <input class="form-control" type="date" id="DtInspecao" name="DtInspecao"
+                                       value="@(ViewBag.InsertData?.DtInspecao != null ? ((DateTime)ViewBag.InsertData?.DtInspecao).ToString("yyyy-MM-dd") : "")">
+                            </div>
+                            <label class="col-2 col-form-label text-end fw-bold ObligatoryLabel"> Status: </label>
+                            <div class="col-2">
+                                @*    <select class="form-select" name="RDFAStatus" id="RDFAStatus" disabled>
+                                    <option value="2" selected>Reprovado</option>
+                                </select> *@
+                                <label class="col-2 col-form-label text-end fw-bold"> REPROVADO </label>
+                                <input class="form-control" type="hidden" name="RDFAStatus" value="2">
+                            </div>
+                            <label class="col-2 col-form-label text-end fw-bold ObligatoryLabel"> </label>
+                            <div class="col-2">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="row mt-2 mb-2">
+                                <label for="Pendencia" class="col-2 col-form-label text-end fw-bold ObligatoryLabel">Pendências::</label>
+                                <div class="col-10">
+                                    <textarea class="form-control" id="Pendencia" rows="2" name="Pendencia">@ViewBag.InsertData?.Pendencia</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="InsertRDFASave">Salvar RDFA</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@if (ViewBag.LVM != null)
+{
+    NotaFiscaisCLVM? values = ViewBag.LVM as NotaFiscaisCLVM;
+    <div class="container">
+        <div class="row w-100 mb-3">
+            <div class="card-body border">
+                <div class="card-header border bg-secondary text-white">
+                    <label class="col-form-label ms-4 fw-bold">Contrato</label>
+                </div>
+                <div class="row mt-2 mb-2">
+                    <label class="col-2 col-form-label text-end fw-bold">Centro de Custo:</label>
+                    <div class="col-4">
+                        <label class="col-form-label text-end fw-bold">@values?.Obra</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row w-100 mb-3">
+            <div class="card-body border">
+                <div class="card-header border bg-secondary text-white">
+                    <label class="col-form-label ms-4 fw-bold">Dados da Nota</label>
+                    <input type="hidden" id="idempotencyKeyProcedimento" name="IdempotencyKey" value="@ViewBag.IdempotencyKey">
+                    <input class="form-control" type="hidden" name="Id" value="@values?.Id">
+                    <input class="form-control" type="hidden" id="IdLVM" name="IdLVM" value="@values?.Id">
+                    <input class="form-control" type="hidden" id="CodObra" name="CodObra" value="@values?.IdObra">
+                    <input class="form-control" type="hidden" id="LVMOrigem" name="LVMOrigem" value="@values?.MascaraLVM">
+                </div>
+                <div class="row mt-2 mb-2">
+                    <label class="col-2 col-form-label text-end fw-bold">Máscara:</label>
+                    <div class="col-2">
+                        <label class="col-form-label text-end fw-bold">@values?.MascaraLVM</label>
+                    </div>
+                    <label class="col-2 col-form-label text-end fw-bold">Nº LVM:</label>
+                    <div class="col-2">
+                        <label class="col-form-label text-end fw-bold">@values?.NLVM</label>
+                    </div>
+                    <label class="col-2 col-form-label text-end fw-bold"></label>
+                    <div class="col-2">
+                        <label class="col-form-label text-end fw-bold"></label>
+                    </div>
+                </div>
+
+                <div class="row mt-2 mb-2">
+                    <label class="col-2 col-form-label text-end fw-bold">Nota Fiscal:</label>
+                    <div class="col-2">
+                        <label class="col-form-label text-end fw-bold">@values?.NotaFiscal</label>
+                    </div>
+                    <label class="col-2 col-form-label text-end fw-bold">Data:</label>
+                    <div class="col-2">
+                        <label class="col-form-label text-end fw-bold">@values?.DataString</label>
+                    </div>
+                </div>
+
+                <div class="row mt-2 mb-2">
+                    <label class="col-2 col-form-label text-end fw-bold">Fornecedor:</label>
+                    <div class="col-2">
+                        <label class="col-form-label text-end fw-bold">@values?.Fornecedor</label>
+                    </div>
+                    <label class="col-2 col-form-label text-end fw-bold">OC:</label>
+                    <div class="col-2">
+                        <label class="col-form-label text-end fw-bold">@values?.OC</label>
+                    </div>
+                    <label class="col-2 col-form-label text-end fw-bold">Invoice:</label>
+                    <div class="col-2">
+                        <label class="col-form-label text-end fw-bold">@values?.Invoice</label>
+                    </div>
+                </div>
+
+                <div class="row mt-2 mb-2">
+                    <label class="col-2 col-form-label text-end fw-bold">QtdeItens:</label>
+                    <div class="col-2">
+                        <label class="col-form-label text-end fw-bold">@values?.QtdItem</label>
+                    </div>
+                    <label class="col-2 col-form-label text-end fw-bold">Material:</label>
+                    <div class="col-2">
+                        <label class="col-form-label text-end fw-bold">@values?.Material</label>
+                    </div>
+                    <label class="col-2 col-form-label text-end fw-bold">Transportadora:</label>
+                    <div class="col-2">
+                        <label class="col-form-label text-end fw-bold">@values?.Transportadora </label>
+                    </div>
+                </div>
+
+                <div class="row mt-2 mb-2">
+                    <label class="col-2 col-form-label text-end fw-bold">Disciplina:</label>
+                    <div class="col-2">
+                        <label class="col-form-label text-end fw-bold">@values?.Disciplina</label>
+                    </div>
+                    <label class="col-2 col-form-label text-end fw-bold"> Tipo de OC:</label>
+                    <div class="col-2">
+                        <label class="col-form-label text-end fw-bold">@values?.TipoOC</label>
+                    </div>
+                    <label class="col-2 col-form-label text-end fw-bold">Procedimento:</label>
+                </div>
+                <div class="row mt-2 mb-2">
+                    <label class="col-2 col-form-label text-end fw-bold">Obs:</label>
+                    <div class="col-8">
+                        <label class="col-form-label text-end fw-bold">@values?.Obs </label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row w-100 mb-3">
+            <div class="d-flex justify-content-start align-items-start">
+            </div>
+        </div>
+    </div>
+}
+
+@if (ViewBag?.CLVMs != null)
+{
+    <div class="container-fluid">
+        <div class="row mb-3">
+            <div class="row mb-3">
+                <div class="col-2">
+                    <input type="text" class="col-2 form-control" id="searchByItem" placeholder="Pesquisa Item">
+                </div>
+                <div class="col-2">
+                    <input type="text" class="col-2 form-control" id="searchByCodigo" placeholder="Pesquisa Codigo">
+                </div>
+            </div>
+            <div class="table-responsive h-50" style="max-height: 500px; overflow-y: auto;">
+                <table class="table table-hover" id="CLVMTableList">
+                    <thead>
+                        <tr>
+                            <th class="text-center align-middle" style="width: 20px;"> <input class="form-check-input checkAll" type="checkbox" id="checkAllBoxes"></th>
+                            <th class="text-center align-middle">Item</th>
+                            <th class="text-center align-middle">Nota Fiscal</th>
+                            <th class="text-center align-middle sap-code">Codigo e Tipo Componente</th>
+                            <th class="text-center align-middle">Certificacao</th>
+                            <th class="text-center align-middle">Corrida-Volume</th>
+                            <th class="text-center align-middle">Qtd.</th>
+                            <th class="text-center align-middle">Unid. Medida</th>
+                            <th class="text-center align-middle">LVM Origem</th>
+                            <th class="text-center align-middle">Programação</th>
+                            <th class="text-center align-middle">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (CLVMVM? value in ViewBag.CLVMs as IEnumerable<CLVMVM>)
+                        {
+                            <tr>
+                                <td>  <input class="form-check-input clvmBox" type="checkbox" value="@value.Id" id="flexCheckDefault"> </td>
+                                <td class="CLVMTable">@value.Item</td>
+                                <td class="NotaFsical"></td>
+                                <td class="CodigoTipo">@value?.Codigo</td>
+                                <td>@value?.Certificacao</td>
+                                <td>@value?.Corrida</td>
+                                <td>@value?.Qtd</td>
+                                <td>@value?.UnidadeMedida</td>
+                                <td>@value?.LVMOrigem</td>
+                                <td>@value?.Programacao</td>
+                                <td>
+                                    @value?.Status
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="container-fluid">
+    <div class="row w-100 mb-3">
+        <div class="card-header">
+            <div class="card-header border bg-secondary text-white">
+                <label class="col-form-label ms-4 fw-bold">RDFA</label>
+            </div>
+        </div>
+        <div class="card-body border">
+            <div class="row mt-4 mb-3">
+                <div class="d-flex justify-content-between align-items-start w-100">
+                    <div class="d-flex">
+                        <button type="button" class="btn ButtonOutline d-flex justify-content-center align-content-center ms-4 me-2" data-bs-toggle="modal" data-bs-target="#InsertRDFAModal">
+                            <img src="~/images/plus-lg.svg" class="SwitchingIcons" />  Incluir RDFA
+                        </button>
+                        <button type="button" class="btn ButtonOutline d-flex justify-content-center align-content-center ms-4" data-bs-toggle="modal" data-bs-target="#RDFAImagesModal">
+                            @*  <img src="~/images/plus-lg.svg" class="SwitchingIcons" /> *@  Images RDFA
+                        </button>
+                        <button type="button" class="btn ButtonOutline d-flex justify-content-center align-content-center ms-4" onclick="goToPrintRDFA()">
+                            @*  <img src="~/images/plus-lg.svg" class="SwitchingIcons" /> *@  Imprimir RDFA
+                        </button>
+                    </div>
+                    <div class="btn-group me-4" role="group" aria-label="Basic outlined example">
+                 @*        @if (ViewBag.RDFAList != null)
+                        {
+                            List<RDFAAccordionModel>? rdfaList = ViewBag.RDFAList as List<RDFAAccordionModel>;
+
+                            @if (permission?.Any(p => p.MainMenuName == "Cadastro(menu)") == true)
+                            {
+                                List<PermissionAccessModel?>? childrenmenu = permission.Where(i => i.MainMenuName == "Cadastro(menu)").Select(i => i.ChildrenMenu).FirstOrDefault();
+
+                                @if (childrenmenu?.Any(c => c.Acesso == "VerifyAbertorRDFA") == true)
+                                {
+                                    <button type="button" class="btn btnOtherOutline" onclick="verifyAbertura(document.getElementById('HiddenIdLVM').value);">Verificar Abertura</button>
+                                }
+
+                                @if (childrenmenu?.Any(c => c.Acesso == "ResponsavelFechamento") == true)
+                                {
+                                    @if (rdfaList != null && rdfaList.All(rdfa => rdfa.rdfaValues.All(value => value.IdAbertoVerificador != null)))
+                                    {
+                                        <button type="button" class="btn btnOtherOutline" onclick="verifyResponsavelFechamento(document.getElementById('HiddenIdLVM').value);">Responsavel Fechamento</button>
+                                    }
+                                }
+
+                                @if (childrenmenu?.Any(c => c.Acesso == "Verificador Fechamento") == true)
+                                {
+                                    @if (rdfaList != null && rdfaList.All(rdfa => rdfa.rdfaValues.All(value => value.IdResponsavelFechamento != null)))
+                                    {
+                                        <button type="button" class="btn btnOtherOutline" onclick="verifyFechamento(document.getElementById('HiddenIdLVM').value);">Verificar Fechamento</button>
+
+                                    }
+                                }
+
+                            }
+                        } *@
+                    </div>
+                </div>
+            </div>
+
+            @if (ViewBag.RDFAList != null)
+            {
+                <div class="row mt-3 mb-3 d-flex justify-content-center">
+
+                    @* @foreach (RDFAAccordionModel? value in ViewBag.RDFAList as IEnumerable<RDFAAccordionModel>)
+                    {
+                        <div class="accordion" id="accordionExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button d-flex justify-content-center align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#@value.AccordionId" aria-controls="collapseOne">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col d-flex justify-content-center align-items-center">
+                                                    <span class="fw-bold mb-0">NoRDFA:@value.NoRDFA</span>
+                                                </div>
+                                                <div class="col d-flex justify-content-center align-items-center">
+                                                    <span class="fw-bold mb-0">No Pendencia:@value.NoPendencia</span>
+                                                </div>
+                                                <div class="col d-flex justify-content-center align-items-center">
+                                                    <span class="fw-bold mb-0">Item:@value.GroupedItems</span>
+                                                </div>
+                                                <div class="col d-flex justify-content-center align-items-center">
+                                                    <span class="fw-bold mb-0">NotaFiscal:@value.GroupedNotaFiscal</span>
+                                                </div>
+                                                <div class="col d-flex justify-content-end">
+                                                    @if (value.rdfaValues.All(i => i.Status == "1"))
+                                                    {
+                                                        @if (permission?.Any(p => p.MainMenuName == "Cadastro(menu)") == true)
+                                                        {
+                                                            List<PermissionAccessModel?>? childrenmenu = permission.Where(i => i.MainMenuName == "Cadastro(menu)").Select(i => i.ChildrenMenu).FirstOrDefault();
+
+                                                            @if (childrenmenu?.Any(c => c.Acesso == "Administrador") == true)
+                                                            {
+                                                                <a class="btn btn-info d-flex align-items-center justify-content-center me-1" asp-action="GetCLVMToAdminEdit" asp-route-id="@value?.GroupedId" asp-route-idLVM="@ViewBag?.ValueOfLVM?.Id"><img src="~/images/pencil-fill.svg" class="SwitchingIcons" /></a>
+                                                                <a class="btn btn-danger d-flex align-items-center justify-content-center me-1" href="#" onclick="confirmDelete(@value.GroupedId, document.getElementById('HiddenIdLVM').value);" onclick="stopPropagation(event);"><img src="~/images/trash3-fill.svg" class="SwitchingIcons" /></a>
+                                                            }
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <a class="btn btn-info d-flex align-items-center justify-content-center me-1" asp-action="GetRDFAToGroupEdit" asp-route-id="@value?.GroupedId" asp-route-idLVM="@ViewBag?.ValueOfLVM?.Id" onclick="stopPropagation(event);"><img src="~/images/pencil-fill.svg" class="SwitchingIcons" /></a>
+                                                        <a class="btn btn-danger d-flex align-items-center justify-content-center me-1" href="#" onclick="confirmDelete(@value.GroupedId, document.getElementById('HiddenIdLVM').value);" onclick="stopPropagation(event);"><img src="~/images/trash3-fill.svg" class="SwitchingIcons" /></a>
+                                                        <a class="btn btn-success d-flex align-items-center justify-content-center" asp-action="GetCLVMToGroupApprove" asp-route-id="@value?.GroupedId" asp-route-idLVM="@ViewBag?.ValueOfLVM?.Id" onclick="stopPropagation(event);"><img src="~/images/file-check.svg" class="SwitchingIcons" /></a>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="@value.AccordionId" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body AccordBody">
+
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+
+                                                    <th class="text-center align-middle">No RDFA</th>
+                                                    <th class="text-center align-middle">No Pendencia</th>
+                                                    <th class="text-center align-middle">Item</th>
+                                                    <th class="text-center align-middle">Nota Fiscal</th>
+                                                    <th class="text-center align-middle">Pendencia</th>
+                                                    <th class="text-center align-middle">Tipo Pendencia</th>
+                                                    <th class="text-center align-middle">Falta Documental</th>
+                                                    <th class="text-center align-middle">Falta Fisica</th>
+                                                    <th class="text-center align-middle">Dt Inspeção</th>
+                                                    <th class="text-center align-middle">Status</th>
+                                                    <th class="text-center align-middle">Resultado</th>
+                                                    <th class="text-center align-middle">Data Atual</th>
+                                                    <th class="text-center align-middle" style="width: 20px;"></th>
+                                                    <th class="text-center align-middle" style="width: 20px;"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (RDFAInsideAccordionModel? item in value.rdfaValues as IEnumerable<RDFAInsideAccordionModel>)
+                                                {
+                                                    <tr>
+
+                                                        <td>@item.NoRDFA</td>
+                                                        <td>@item.NoPendencia</td>
+                                                        <td>@item.Item</td>
+                                                        <td>@item?.NotaFiscal</td>
+                                                        <td>@item?.Pendencia</td>
+                                                        <td>@item?.TipoPendencia</td>
+                                                        <td>@item?.FaltaDocumental</td>
+                                                        <td>@item?.FaltaFisica</td>
+                                                        <td>@item?.DtInspecao</td>
+                                                        <td>
+                                                            @if (item?.Status == "1")
+                                                            {
+                                                                <img src="~/images/check-circle-fill.svg" />
+                                                            }
+                                                            else if (item?.Status == "2")
+                                                            {
+                                                                <img src="~/images/x-circle-fill.svg" />
+                                                            }
+                                                            else
+                                                            {
+                                                                <span>N/A</span>
+                                                            }
+                                                        </td>
+                                                        <td>@item?.Resultado</td>
+                                                        <td>@item?.DataFechamento</td>
+                                                        @if (item?.Status == "1")
+                                                        {
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <td> <a class="btn btn-danger d-flex align-items-center justify-content-center me-1" href="#" onclick="confirmDelete(@item.IdRDFA, document.getElementById('HiddenIdLVM').value);"><img src="~/images/trash3-fill.svg" class="SwitchingIcons" /></a> </td>
+                                                            <td> <a class="btn btn-success d-flex align-items-center justify-content-center" asp-action="GetCLVMToGroupApprove" asp-route-id="@item?.IdRDFA" asp-route-idLVM="@ViewBag?.ValueOfLVM?.Id"><img src="~/images/file-check.svg" class="SwitchingIcons" /></a></td>
+                                                        }
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+ *@
+                </div>
+            }
+        </div>
+    </div>
+</div>

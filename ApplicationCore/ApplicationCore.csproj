@@ -19,4 +19,9 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CadNotasCore\RDFAs\Commands\" />
+    <Folder Include="CadNotasCore\RDFAs\VMs\" />
+  </ItemGroup>
+
 </Project>

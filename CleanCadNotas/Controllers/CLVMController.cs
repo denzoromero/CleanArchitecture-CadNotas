@@ -5,19 +5,25 @@ using ApplicationCore.CadNotasCore.CLVMs.Commands.Update;
 using ApplicationCore.CadNotasCore.CLVMs.Queries;
 using ApplicationCore.CadNotasCore.NotaFiscaisCore.Queries;
 using ApplicationCore.CadNotasCore.Projetos.Queries;
+using ApplicationCore.CadNotasCore.RelatorioCLVMs.Commands.Generate;
+using ApplicationCore.CadNotasCore.RelatorioCLVMs.Queries;
 using CleanCadNotas.Configurations;
+using CleanCadNotas.Helpers;
+using CleanCadNotas.Interfaces;
 using CleanCadNotas.Models;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace CleanCadNotas.Controllers
 {
-    public class CLVMController(IMediator mediator) : Controller
+    public class CLVMController(IMediator mediator, IViewRenderService viewRenderService) : Controller
     {
         private readonly IMediator _mediator = mediator;
+        private readonly IViewRenderService _viewRenderService = viewRenderService;
         public async Task<IActionResult> Index(GetObraList query)
         {
             try
@@ -225,10 +231,13 @@ namespace CleanCadNotas.Controllers
             }
         }
 
-        public async Task<IActionResult> PrintCLVMPage(int IdLVM)
+        public async Task<IActionResult> PrintCLVMPage(GetPrintCLVMPage query)
         {
             try
             {
+                var page = await _mediator.Send(query);
+                ViewBag.RelatorioResult = page;
+
                 return View();
             }
             catch (ValidationException ex)
@@ -240,6 +249,44 @@ namespace CleanCadNotas.Controllers
             {
                 ViewBag.StatusMessage = new StatusMessageViewModel(false, ["Execution Timeout Expired."]);
                 return View(nameof(Index));
+            }
+        }
+
+        public IActionResult CLVMHeader()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GenerateReport([FromBody] GenerateCLVM command)
+        {
+            try
+            {
+                var result = await _mediator.Send(command);
+                if (!result.IsSuccess) return BadRequest(new { Type = "Business", Message = result.Error!.Message });
+
+                var html = await _viewRenderService.RenderToStringAsync(ControllerContext,"CLVMHeader");
+
+                var content = new StringBuilder();
+                content.Append("<style>");
+                content.Append(GenerateCSSExt.GenerateCSS());
+                content.Append("</style>");
+                content.Append(html);
+
+                return Ok(content.ToString());
+                //return Content(content.ToString(), "text/html");
+                //return Content(html);
+
+
+                //return Ok(new { Message = result.Message, RedirectUrl = Url.Action(nameof(CLVMPage), new { id = command.IdLVM }) });
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(new { Type = "Validation", Errors = ex.Errors });
+            }
+            catch (Exception ex) when (TimeoutExceptionHandler.IsSqlTimeout(ex))
+            {
+                return StatusCode(503, new { Type = "Infrastructure", Message = "Execution Timeout Expired." });
             }
         }
 
