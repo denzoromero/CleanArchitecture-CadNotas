@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ApplicationCore.CadNotasCore.CLVMs.Commands.Export
 {
-    public class ExportSpecification : Specification<CadClvm, ExportVM>
+    public class ExportSpecification : Specification<EntityClvm, ExportVM>
     {
         public ExportSpecification(int mascara)
         {

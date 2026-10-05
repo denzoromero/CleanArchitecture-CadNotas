@@ -19,17 +19,17 @@ namespace ApplicationCore.CadNotasCore.RelatorioCLVMs.Commands.Generate
         public int? Assinatura { get; init; }
     }
 
-    public class GenerateCLVMCommandHandler(IRepositoryCad<RelatorioCLVM> repos, IRepositoryCad<CadLVM> reposlvm) : IRequestHandler<GenerateCLVM, Result<int>>
+    public class GenerateCLVMCommandHandler(IRepositoryCad<ReportCLVM> repos, IRepositoryCad<EntityLVM> reposlvm) : IRequestHandler<GenerateCLVM, Result<int>>
     {
-        private readonly IRepositoryCad<RelatorioCLVM> _repository = repos;
-        private readonly IRepositoryCad<CadLVM> _repositoryLVM = reposlvm;
+        private readonly IRepositoryCad<ReportCLVM> _repository = repos;
+        private readonly IRepositoryCad<EntityLVM> _repositoryLVM = reposlvm;
 
         public async Task<Result<int>> Handle(GenerateCLVM req, CancellationToken cancellationToken)
         {
         
             if (req.IdRelatorio == null || req.IdRelatorio.HasValue)
             {
-                var relatorio = RelatorioCLVM.Create(req.IdLVM.ToString(), req.Status, 1, req.Observacao, "a");
+                var relatorio = ReportCLVM.Create(req.IdLVM.ToString(), req.Status, 1, req.Observacao, "a");
                 await _repository.AddAsync(relatorio, cancellationToken);
                 var lvm = await _repositoryLVM.GetByIdAsync(req.IdLVM);
                 if (lvm is null) return Result<int>.Failure(new Error("404", "Entity not found."));

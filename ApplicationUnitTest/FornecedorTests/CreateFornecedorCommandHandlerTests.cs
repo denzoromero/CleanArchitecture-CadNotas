@@ -12,13 +12,13 @@ namespace ApplicationUnitTest.FornecedorTests
 {
     public class CreateFornecedorCommandHandlerTests
     {
-        private readonly Mock<IRepositoryCad<CadFornecedor>> _repositoryMock;
+        private readonly Mock<IRepositoryCad<EntityFornecedor>> _repositoryMock;
         private readonly Mock<IUser> _userMock;
         private readonly CreateFornecedorCommandHandler _handler;
 
         public CreateFornecedorCommandHandlerTests()
         {
-            _repositoryMock = new Mock<IRepositoryCad<CadFornecedor>>();
+            _repositoryMock = new Mock<IRepositoryCad<EntityFornecedor>>();
             _userMock = new Mock<IUser>();
             _userMock.Setup(x => x.UserId).Returns(1);
             _handler = new CreateFornecedorCommandHandler(_repositoryMock.Object,_userMock.Object);
@@ -54,7 +54,7 @@ namespace ApplicationUnitTest.FornecedorTests
 
             result.Message.Should().Contain("Fornecedor Successfully inserted.");
 
-            _repositoryMock.Verify(x => x.AddAsync(It.IsAny<CadFornecedor>(),It.IsAny<CancellationToken>()),Times.Once);
+            _repositoryMock.Verify(x => x.AddAsync(It.IsAny<EntityFornecedor>(),It.IsAny<CancellationToken>()),Times.Once);
 
         }
 

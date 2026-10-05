@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Domain.Entities.EntitiesCad.ECadProjeto
 {
-    public class CadProjeto : BaseEntity, IAggregateRoot
+    public class EntityProjeto : BaseEntity, IAggregateRoot
     {
         public string Projeto { get; set; } = string.Empty;
         public string? Cliente { get; set; }
@@ -16,19 +16,19 @@ namespace Domain.Entities.EntitiesCad.ECadProjeto
 
         public IReadOnlyCollection<ObraVSProjeto> Obras => _obras.AsReadOnly();
 
-        private CadProjeto() { }
+        private EntityProjeto() { }
 
-        public CadProjeto(string projeto)
+        public EntityProjeto(string projeto)
         {
             Projeto = projeto;
             Ativo = 1;
         }
 
-        public static CadProjeto Create(string projeto, IEnumerable<int> idObras)
+        public static EntityProjeto Create(string projeto, IEnumerable<int> idObras)
         {
             Guard.Against.NullOrEmpty(projeto);
 
-            var entity = new CadProjeto(projeto);
+            var entity = new EntityProjeto(projeto);
 
             foreach (var idObra in idObras)
             {

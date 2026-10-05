@@ -11,9 +11,9 @@ namespace ApplicationCore.CadNotasCore.CLVMs.Commands.Export
 {
     public record ExportControlStruExcel(int Mascara) : IRequest<byte[]>;
 
-    public class ExportControlStruExcelCommandHandler(IRepositoryCad<CadClvm> repos) : IRequestHandler<ExportControlStruExcel, byte[]>
+    public class ExportControlStruExcelCommandHandler(IRepositoryCad<EntityClvm> repos) : IRequestHandler<ExportControlStruExcel, byte[]>
     {
-        private readonly IRepositoryCad<CadClvm> _repository = repos;
+        private readonly IRepositoryCad<EntityClvm> _repository = repos;
         public async Task<byte[]> Handle(ExportControlStruExcel req, CancellationToken cancellationToken)
         {
 

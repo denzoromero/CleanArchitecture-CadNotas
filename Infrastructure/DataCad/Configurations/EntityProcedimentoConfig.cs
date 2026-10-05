@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Infrastructure.DataCad.Configurations
 {
-    public class CadProcedimentoConfig : IEntityTypeConfiguration<CadProcedimento>
+    public class EntityProcedimentoConfig : IEntityTypeConfiguration<CadProcedimento>
     {
         public void Configure(EntityTypeBuilder<CadProcedimento> builder)
         {

@@ -14,9 +14,9 @@ namespace ApplicationCore.CadNotasCore.Disciplinas.Commands.Update
         public Guid IdempotencyKey { get; init; }
     }
 
-    public class UpdateDisciplinaCommandHandler(IRepositoryCad<CadDisciplina> repos) : IRequestHandler<UpdateDisciplina, Result<int>>
+    public class UpdateDisciplinaCommandHandler(IRepositoryCad<EntityDisciplina> repos) : IRequestHandler<UpdateDisciplina, Result<int>>
     {
-        private readonly IRepositoryCad<CadDisciplina> _repository = repos;
+        private readonly IRepositoryCad<EntityDisciplina> _repository = repos;
         public async Task<Result<int>> Handle(UpdateDisciplina command, CancellationToken cancellationToken)
         {
             var disciplina = await _repository.GetByIdAsync(command.Id, cancellationToken);

@@ -4,7 +4,7 @@ using Domain.Enums;
 
 namespace Domain.Entities.EntitiesCad
 {
-    public class RelatorioCLVM : BaseEntity, IAggregateRoot
+    public class ReportCLVM : BaseEntity, IAggregateRoot
     {
         public string IdLVM { get; set; } = string.Empty;
         public RelatorioStatus Status { get; set; }
@@ -16,9 +16,9 @@ namespace Domain.Entities.EntitiesCad
         public int? IdInspetor { get; set; }
         public DateTime? DtInspetor { get; set; }
 
-        private RelatorioCLVM() { }
+        private ReportCLVM() { }
 
-        public RelatorioCLVM(string idLVM, RelatorioStatus status, int userId)
+        public ReportCLVM(string idLVM, RelatorioStatus status, int userId)
         {
             Guard.Against.InvalidInput(status, nameof(status), s => Enum.IsDefined(typeof(RelatorioStatus), s) && s != RelatorioStatus.None);
             Guard.Against.NullOrEmpty(idLVM, nameof(idLVM));
@@ -30,10 +30,10 @@ namespace Domain.Entities.EntitiesCad
             Ativo = 1;
         }
 
-        public static RelatorioCLVM Create(string idLVM, RelatorioStatus status, int userId,
+        public static ReportCLVM Create(string idLVM, RelatorioStatus status, int userId,
             string? observacao, string? responsavel)
         {
-            return new RelatorioCLVM(idLVM, status, userId)
+            return new ReportCLVM(idLVM, status, userId)
             {
                 Observacao = observacao,
                 Responsavel = responsavel

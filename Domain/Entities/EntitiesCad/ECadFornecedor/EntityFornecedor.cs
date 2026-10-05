@@ -4,45 +4,55 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Domain.Entities.EntitiesCad.ECadTransportadora
+namespace Domain.Entities.EntitiesCad.ECadFornecedor
 {
-    public class CadTransportadora : BaseEntity, IAggregateRoot
+    public class EntityFornecedor : BaseEntity, IAggregateRoot
     {
-        public string Nome { get; private set; } = string.Empty;
+        public int IdAntigo { get; private set; }
+        public string Fornecedor { get; private set; } = string.Empty;
+        public string Fantasia { get; private set; } = string.Empty;
         public string IE { get; private set; } = string.Empty;
         public string CNPJ { get; private set; } = string.Empty;
-        public string? ConhecTransp { get; private set; }
+        public string? Contato { get; private set; }
         public string? Rua { get; private set; }
-        public char? Numero { get; private set; }
+        public string? Numero { get; private set; }
         public string? Bairro { get; private set; }
         public int? IdCidade { get; private set; }
+        public string? CidadeBaseAntiga { get; private set; }
         public int? IdEstado { get; private set; }
+        public char? EstadoBaseAntiga { get; private set; }
         public string? Cep { get; private set; }
         public string? Telefone1 { get; private set; }
         public string? Telefone2 { get; private set; }
-        public string? Fax { get; private set; }
+        public string? Fax { get; private set; } 
         public string? EMail { get; private set; }
         public string? HomePage { get; private set; }
+        public int? Usuario { get; private set; }
 
-        private CadTransportadora() { }
+        private EntityFornecedor() { }
 
-        public CadTransportadora(string nome, string ie, string cnpj)
+        public EntityFornecedor(string fornecedor, string fantasia, string ie, string cnpj)
         {
-            Nome = nome;
+            Fornecedor = fornecedor;
+            Fantasia = fantasia;
             IE = ie;
             CNPJ = cnpj;
+
             Ativo = 1;
         }
 
-        public static CadTransportadora Create(TransportadoraPO param)
+        public static EntityFornecedor Create(FornecedorPO param)
         {
-            Guard.Against.NullOrEmpty(param.Nome, nameof(param.Nome));
+
+            Guard.Against.NullOrEmpty(param.Fornecedor, nameof(param.Fornecedor));
+            Guard.Against.NullOrEmpty(param.Fantasia, nameof(param.Fantasia));
             Guard.Against.NullOrEmpty(param.IE, nameof(param.IE));
             Guard.Against.NullOrEmpty(param.CNPJ, nameof(param.CNPJ));
+            Guard.Against.NegativeOrZero(param.IdUser, nameof(param.IdUser));
 
-            var transportadora = new CadTransportadora(param.Nome, param.IE, param.CNPJ)
+            var fornecedor = new EntityFornecedor(param.Fornecedor, param.Fantasia, param.IE, param.CNPJ)
             {
-                ConhecTransp = param.ConhecTransp,
+                Contato = param.Contato,
                 Rua = param.Rua,
                 Numero = param.Numero,
                 Bairro = param.Bairro,
@@ -51,25 +61,22 @@ namespace Domain.Entities.EntitiesCad.ECadTransportadora
                 Cep = param.Cep,
                 Telefone1 = param.Telefone1,
                 Telefone2 = param.Telefone2,
-                Fax = param.Fax,
                 EMail = param.EMail,
                 HomePage = param.HomePage,
-                DataRegistro = DateTime.UtcNow
+                DataRegistro = DateTime.UtcNow,
+                Usuario = param.IdUser
             };
 
-            return transportadora;
+            return fornecedor;
         }
 
-        public void Update(TransportadoraPO param)
+        public void Update(FornecedorPO param)
         {
-            Guard.Against.NullOrEmpty(param.Nome, nameof(param.Nome));
-            Guard.Against.NullOrEmpty(param.IE, nameof(param.IE));
-            Guard.Against.NullOrEmpty(param.CNPJ, nameof(param.CNPJ));
-
-            Nome = param.Nome;
+            Fornecedor = param.Fornecedor;
+            Fantasia = param.Fantasia;
             IE = param.IE;
             CNPJ = param.CNPJ;
-            ConhecTransp = param.ConhecTransp;
+            Contato = param.Contato;
             Rua = param.Rua;
             Numero = param.Numero;
             Bairro = param.Bairro;
@@ -78,10 +85,15 @@ namespace Domain.Entities.EntitiesCad.ECadTransportadora
             Cep = param.Cep;
             Telefone1 = param.Telefone1;
             Telefone2 = param.Telefone2;
-            Fax = param.Fax;
             EMail = param.EMail;
             HomePage = param.HomePage;
         }
+
+        //public void CreateFornecedor(objectname param)
+        //{
+        //    ....
+        //}
+
 
 
     }

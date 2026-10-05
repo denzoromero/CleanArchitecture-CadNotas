@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Domain.Entities.EntitiesCad.ECadObra
 {
-    public class CadObra : BaseEntity, IAggregateRoot
+    public class EntityObra : BaseEntity, IAggregateRoot
     {
         public int? OldId { get; private set; }
         public string Obra { get; private set; } = string.Empty;
@@ -24,9 +24,9 @@ namespace Domain.Entities.EntitiesCad.ECadObra
         private readonly List<CadProcedimento> _procedimentos = [];
         public IReadOnlyCollection<CadProcedimento> Procedimentos => _procedimentos.AsReadOnly();
 
-        private CadObra() { }
+        private EntityObra() { }
 
-        public CadObra(string obra, string cliente)
+        public EntityObra(string obra, string cliente)
         {
             Obra = obra;
             Cliente = cliente;
@@ -34,13 +34,13 @@ namespace Domain.Entities.EntitiesCad.ECadObra
             Ativo = 1;
         }
 
-        public static CadObra Create(string obra, string cliente,
+        public static EntityObra Create(string obra, string cliente,
             string? descricao, string? contrato, string? masraca, string? ultlvm, string? transferencia)
         {
             Guard.Against.NullOrEmpty(obra, nameof(obra));
             Guard.Against.NullOrEmpty(cliente, nameof(cliente));
 
-            var entity = new CadObra(obra, cliente)
+            var entity = new EntityObra(obra, cliente)
             {
                 Descricao = descricao,
                 Contrato = contrato,

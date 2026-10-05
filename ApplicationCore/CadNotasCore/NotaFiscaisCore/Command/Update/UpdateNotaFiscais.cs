@@ -15,9 +15,9 @@ namespace ApplicationCore.CadNotasCore.NotaFiscaisCore.Command.Update
         public Guid IdempotencyKey { get; init; }
     }
 
-    public class UpdateNotaFiscaisCommandHandler(IRepositoryCad<CadLVM> repos) : IRequestHandler<UpdateNotaFiscais, Result<int>>
+    public class UpdateNotaFiscaisCommandHandler(IRepositoryCad<EntityLVM> repos) : IRequestHandler<UpdateNotaFiscais, Result<int>>
     {
-        private readonly IRepositoryCad<CadLVM> _repository = repos;
+        private readonly IRepositoryCad<EntityLVM> _repository = repos;
 
         public async Task<Result<int>> Handle(UpdateNotaFiscais command, CancellationToken cancellationToken)
         {

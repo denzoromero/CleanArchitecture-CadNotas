@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ApplicationCore.CadNotasCore.CLVMs.Commands.Create
 {
-    public class DuplicateCLVMSpecification : Specification<CadClvm>
+    public class DuplicateCLVMSpecification : Specification<EntityClvm>
     {
         public DuplicateCLVMSpecification(int idLVM, decimal item, int? excludeId = null) 
         {

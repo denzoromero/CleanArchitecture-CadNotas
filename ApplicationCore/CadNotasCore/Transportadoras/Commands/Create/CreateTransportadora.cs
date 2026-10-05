@@ -15,15 +15,15 @@ namespace ApplicationCore.CadNotasCore.Transportadoras.Commands.Create
         public Guid IdempotencyKey { get; init; }
     }
 
-    public class CreateTransportadoraCommandHandler(IRepositoryCad<CadTransportadora> repos, IUser user) : IRequestHandler<CreateTransportadora, Result<int>>
+    public class CreateTransportadoraCommandHandler(IRepositoryCad<EntityTransportadora> repos, IUser user) : IRequestHandler<CreateTransportadora, Result<int>>
     {
-        private readonly IRepositoryCad<CadTransportadora> _repository = repos;
+        private readonly IRepositoryCad<EntityTransportadora> _repository = repos;
         private readonly IUser _user = user;
 
         public async Task<Result<int>> Handle(CreateTransportadora request, CancellationToken cancellationToken)
         {
 
-            var transportadora = CadTransportadora.Create(new TransportadoraPO(request.Nome,
+            var transportadora = EntityTransportadora.Create(new TransportadoraPO(request.Nome,
                 request.IE,
                 request.CNPJ,
                 request.ConhecTransp,

@@ -26,10 +26,10 @@ namespace InfrastructureIntegrationTests.CadFornecedorTests
         [Fact]
         public async Task Should_Return_Active_Fornecedores()
         {
-            _context.CadFornecedors.Add(CadFornecedor.Create(BuildValidFornecedor("Microsoft")));
+            _context.CadFornecedors.Add(EntityFornecedor.Create(BuildValidFornecedor("Microsoft")));
             await _context.SaveChangesAsync();
 
-            var repository = new EfRepositoryCad<CadFornecedor>(_context);
+            var repository = new EfRepositoryCad<EntityFornecedor>(_context);
  
             var spec = new CadFornecedorSpecificaiton(null,1);
  
@@ -42,10 +42,10 @@ namespace InfrastructureIntegrationTests.CadFornecedorTests
         [Fact]
         public async Task Should_Filter_By_Fornecedor_Name()
         {
-            _context.CadFornecedors.Add(CadFornecedor.Create(BuildValidFornecedor("Microsoft")));
+            _context.CadFornecedors.Add(EntityFornecedor.Create(BuildValidFornecedor("Microsoft")));
             await _context.SaveChangesAsync();
 
-            var repository = new EfRepositoryCad<CadFornecedor>(_context);
+            var repository = new EfRepositoryCad<EntityFornecedor>(_context);
             var spec = new CadFornecedorSpecificaiton("Microsoft", 1);
 
             var result = await repository.ListAsync(spec);
@@ -58,11 +58,11 @@ namespace InfrastructureIntegrationTests.CadFornecedorTests
         {
             for (int i = 1; i <= 3; i++)
             {
-                _context.CadFornecedors.Add(CadFornecedor.Create(BuildValidFornecedor($"Fornecedor {i}")));
+                _context.CadFornecedors.Add(EntityFornecedor.Create(BuildValidFornecedor($"Fornecedor {i}")));
             }
             await _context.SaveChangesAsync();
 
-            var repository = new EfRepositoryCad<CadFornecedor>(_context);
+            var repository = new EfRepositoryCad<EntityFornecedor>(_context);
 
             var spec = new CadFornecedorSpecificaiton(null, 1, 2);
 
@@ -76,9 +76,9 @@ namespace InfrastructureIntegrationTests.CadFornecedorTests
         {
 
             // Arrange
-            var repository = new EfRepositoryCad<CadFornecedor>(_context);
+            var repository = new EfRepositoryCad<EntityFornecedor>(_context);
  
-            var fornecedor = CadFornecedor.Create(BuildValidFornecedor("Microsoft"));
+            var fornecedor = EntityFornecedor.Create(BuildValidFornecedor("Microsoft"));
  
             // Act
             await repository.AddAsync(fornecedor);
@@ -96,9 +96,9 @@ namespace InfrastructureIntegrationTests.CadFornecedorTests
         public async Task Update_Should_Persist_Changes()
         {
             // Arrange
-            var repository = new EfRepositoryCad<CadFornecedor>(_context);
+            var repository = new EfRepositoryCad<EntityFornecedor>(_context);
 
-            var fornecedor = CadFornecedor.Create(BuildValidFornecedor("microsoft"));
+            var fornecedor = EntityFornecedor.Create(BuildValidFornecedor("microsoft"));
 
             await repository.AddAsync(fornecedor);
             await _context.SaveChangesAsync();

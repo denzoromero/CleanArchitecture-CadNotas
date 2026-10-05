@@ -14,10 +14,10 @@ namespace ApplicationCore.CadNotasCore.CLVMs.Queries
 {
     public record GetCLVMPage(int id) : IRequest<Result<CLVMPageVM>>;
 
-    public class GetCLVMPageQueryHandler(IRepositoryCad<CadClvm> repos, IRepositoryCad<CadLVM> reposLVM, IRepositoryCad<CadProcedimento> reposProc) : IRequestHandler<GetCLVMPage, Result<CLVMPageVM>>
+    public class GetCLVMPageQueryHandler(IRepositoryCad<EntityClvm> repos, IRepositoryCad<EntityLVM> reposLVM, IRepositoryCad<CadProcedimento> reposProc) : IRequestHandler<GetCLVMPage, Result<CLVMPageVM>>
     {
-        private readonly IRepositoryCad<CadClvm> _repository = repos;
-        private readonly IRepositoryCad<CadLVM> _repositoryLVM = reposLVM;
+        private readonly IRepositoryCad<EntityClvm> _repository = repos;
+        private readonly IRepositoryCad<EntityLVM> _repositoryLVM = reposLVM;
         private readonly IRepositoryCad<CadProcedimento> _repositoryProc = reposProc;
         public async Task<Result<CLVMPageVM>> Handle(GetCLVMPage request, CancellationToken cancellationToken)
         {

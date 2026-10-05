@@ -8,9 +8,9 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace ApplicationCore.CadNotasCore.NotaFiscaisCore.Specifications
 {
-    public class SearchNotaFiscaisSpecification : Specification<CadLVM, NotaFiscaisVM>
+    public class SearchNotaFiscaisSpecification : Specification<EntityLVM, NotaFiscaisVM>
     {
-        public static Expression<Func<CadLVM, bool>> BuildFilter(string? filter, int ativo, int idObra)
+        public static Expression<Func<EntityLVM, bool>> BuildFilter(string? filter, int ativo, int idObra)
         {
             return i => (string.IsNullOrEmpty(filter)
                                                             || (i.MascaraLVM != null && i.MascaraLVM.Contains(filter))

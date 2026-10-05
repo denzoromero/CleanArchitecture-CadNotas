@@ -15,12 +15,12 @@ namespace ApplicationCore.CadNotasCore.Materials.Commands.Create
         public Guid IdempotencyKey { get; init; }
     }
 
-    public class CreateMaterialCommandHandler(IRepositoryCad<CadMaterial> repos) : IRequestHandler<CreateMaterial, Result<int>>
+    public class CreateMaterialCommandHandler(IRepositoryCad<EntityMaterial> repos) : IRequestHandler<CreateMaterial, Result<int>>
     {
-        private readonly IRepositoryCad<CadMaterial> _repository = repos;
+        private readonly IRepositoryCad<EntityMaterial> _repository = repos;
         public async Task<Result<int>> Handle(CreateMaterial command, CancellationToken cancellationToken)
         {
-            var material = CadMaterial.Create(command.Material);
+            var material = EntityMaterial.Create(command.Material);
 
             await _repository.AddAsync(material, cancellationToken);
 

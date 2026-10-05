@@ -13,7 +13,7 @@ namespace Domain.Entities.EntitiesCad
         public string Procedimento { get; private set; } = string.Empty;
         public string? Revisao { get; private set; }
 
-        public CadObra? Obra { get; private set; }
+        public EntityObra? Obra { get; private set; }
 
         private CadProcedimento() { }
 

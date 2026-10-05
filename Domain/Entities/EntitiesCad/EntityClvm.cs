@@ -10,10 +10,10 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Domain.Entities.EntitiesCad
 {
-    public class CadClvm : BaseEntity, IAggregateRoot
+    public class EntityClvm : BaseEntity, IAggregateRoot
     {
         public int IdLVM { get; private set; }
-        public CadLVM LVM { get; private set; } = null!;
+        public EntityLVM LVM { get; private set; } = null!;
         public int? CodObra { get; private set; }
         public decimal Item { get; private set; }
         public string Codigo { get; private set; } = string.Empty;
@@ -32,13 +32,13 @@ namespace Domain.Entities.EntitiesCad
         public int PO { get; private set; }
         [Column("idCodigoMaterial")]
         public int? IdCodigoMaterial { get; private set; }
-        public CadMaterialCLVM MaterialCLVM { get; private set; } = null!;
+        public EntityMaterialCLVM MaterialCLVM { get; private set; } = null!;
 
         public int? TransferStatus { get; private set; }
 
-        private CadClvm() { }
+        private EntityClvm() { }
 
-        public CadClvm(int idLVM,decimal item, string codigo, DateTime dtInspecao, ClvmStatus status, int po, int idMaterialCLVM)
+        public EntityClvm(int idLVM,decimal item, string codigo, DateTime dtInspecao, ClvmStatus status, int po, int idMaterialCLVM)
         {
             Guard.Against.NegativeOrZero(idLVM, nameof(idLVM));
             Guard.Against.NegativeOrZero(item, nameof(item));
@@ -59,12 +59,12 @@ namespace Domain.Entities.EntitiesCad
             TransferStatus = 0;
         }
 
-        public static CadClvm Create(int idLVM, decimal item, string codigo, DateTime dtInspecao, ClvmStatus status, int po, int idMaterialCLVM,
+        public static EntityClvm Create(int idLVM, decimal item, string codigo, DateTime dtInspecao, ClvmStatus status, int po, int idMaterialCLVM,
             int? codObra, string? tipoComponente, string? certificacao, string? corrida, string? tma, string? lvmOrigem, UMedida? umedida, decimal? qtd,
             int? idInspetor, int? programacao, string? observacao)
         {
 
-            return new CadClvm(idLVM, item, codigo, dtInspecao, status, po, idMaterialCLVM)
+            return new EntityClvm(idLVM, item, codigo, dtInspecao, status, po, idMaterialCLVM)
             {
                 CodObra = codObra,
                 TipoComponente = tipoComponente,

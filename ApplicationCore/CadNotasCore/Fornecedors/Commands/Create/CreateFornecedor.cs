@@ -12,15 +12,15 @@ namespace ApplicationCore.CadNotasCore.Fornecedors.Commands.Create
         public Guid IdempotencyKey { get; init; }
     }
 
-    public class CreateFornecedorCommandHandler(IRepositoryCad<CadFornecedor> repos, IUser user) : IRequestHandler<CreateFornecedor, Result<int>>
+    public class CreateFornecedorCommandHandler(IRepositoryCad<EntityFornecedor> repos, IUser user) : IRequestHandler<CreateFornecedor, Result<int>>
     {
-        private readonly IRepositoryCad<CadFornecedor> _repository = repos;
+        private readonly IRepositoryCad<EntityFornecedor> _repository = repos;
         private readonly IUser _user = user;
 
         public async Task<Result<int>> Handle(CreateFornecedor req, CancellationToken cancellationToken)
         {
 
-            var fornecedor = CadFornecedor.Create(new FornecedorPO(
+            var fornecedor = EntityFornecedor.Create(new FornecedorPO(
                 req.Fornecedor,
                 req.Fantasia,
                 req.Contato,

@@ -10,9 +10,9 @@ namespace ApplicationCore.CadNotasCore.RelatorioCLVMs.Queries
 {
     public record GetPrintCLVMPage(int IdLVM) : IRequest<GetPrintCLVMPageVM?>;
 
-    public class GetPrintCLVMPageQueryHandler(IRepositoryCad<CadLVM> repos, IRepositoryBS<UsuarioBS> reposBS) : IRequestHandler<GetPrintCLVMPage, GetPrintCLVMPageVM?>
+    public class GetPrintCLVMPageQueryHandler(IRepositoryCad<EntityLVM> repos, IRepositoryBS<UsuarioBS> reposBS) : IRequestHandler<GetPrintCLVMPage, GetPrintCLVMPageVM?>
     {
-        private readonly IRepositoryCad<CadLVM> _repos = repos;
+        private readonly IRepositoryCad<EntityLVM> _repos = repos;
         private readonly IRepositoryBS<UsuarioBS> _reposBS = reposBS;
         public async Task<GetPrintCLVMPageVM?> Handle(GetPrintCLVMPage req, CancellationToken cancellationToken)
         {

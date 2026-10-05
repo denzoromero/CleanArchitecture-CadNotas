@@ -19,9 +19,9 @@ namespace ApplicationCore.CadNotasCore.Projetos.Commands.Update
         public Guid IdempotencyKey { get; init; }
     }
 
-    public class UpdateProjetoCommandHandler(IRepositoryCad<CadProjeto> repos) : IRequestHandler<UpdateProjeto, Result<int>>
+    public class UpdateProjetoCommandHandler(IRepositoryCad<EntityProjeto> repos) : IRequestHandler<UpdateProjeto, Result<int>>
     {
-        private readonly IRepositoryCad<CadProjeto> _repository = repos;
+        private readonly IRepositoryCad<EntityProjeto> _repository = repos;
         public async Task<Result<int>> Handle(UpdateProjeto command, CancellationToken cancellationToken)
         {
             var projeto = await _repository.FirstOrDefaultAsync(new ProjetoById(command.Id), cancellationToken);

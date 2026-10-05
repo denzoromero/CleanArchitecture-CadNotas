@@ -12,9 +12,9 @@ namespace ApplicationCore.CadNotasCore.CLVMs.Queries
 {
     public record GetCLVMbyId(int id) : IRequest<Result<CLVMbyIdVM>>;
 
-    public class GetCLVMbyIdQueryHandler (IRepositoryCad<CadClvm> repos) : IRequestHandler<GetCLVMbyId, Result<CLVMbyIdVM>>
+    public class GetCLVMbyIdQueryHandler (IRepositoryCad<EntityClvm> repos) : IRequestHandler<GetCLVMbyId, Result<CLVMbyIdVM>>
     {
-        private readonly IRepositoryCad<CadClvm> _repository = repos;
+        private readonly IRepositoryCad<EntityClvm> _repository = repos;
         public async Task<Result<CLVMbyIdVM>> Handle(GetCLVMbyId req, CancellationToken cancellationToken)
         {
             var item = await _repository.FirstOrDefaultAsync(new GetCLVMbyIdSpecification(req.id), cancellationToken);

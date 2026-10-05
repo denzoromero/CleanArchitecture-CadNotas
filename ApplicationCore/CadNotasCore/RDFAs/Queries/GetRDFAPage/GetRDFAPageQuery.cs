@@ -10,9 +10,9 @@ namespace ApplicationCore.CadNotasCore.RDFAs.Queries.GetRDFAPage
 {
     public record GetRDFAPageQuery(int id) : IRequest<Result<GetRDFAPageVM>>;
     
-    public class GetRDFAPageQueryHandler(IRepositoryCad<CadLVM> reposLVM) : IRequestHandler<GetRDFAPageQuery, Result<GetRDFAPageVM>>
+    public class GetRDFAPageQueryHandler(IRepositoryCad<EntityLVM> reposLVM) : IRequestHandler<GetRDFAPageQuery, Result<GetRDFAPageVM>>
     {
-        private readonly IRepositoryCad<CadLVM> _repositoryLVM = reposLVM;
+        private readonly IRepositoryCad<EntityLVM> _repositoryLVM = reposLVM;
         public async Task<Result<GetRDFAPageVM>> Handle(GetRDFAPageQuery request, CancellationToken cancellationToken)
         {
             var lvm = await _repositoryLVM.FirstOrDefaultAsync(new GetLVMByIdSpecification(request.id), cancellationToken);

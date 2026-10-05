@@ -8,9 +8,9 @@ namespace ApplicationCore.CadNotasCore.CLVMs.Commands.Export
 {
     public record ExportControlTubExcel(int Mascara) : IRequest<byte[]>;
 
-    public class ExportControlTubExcelCommandHandler(IRepositoryCad<CadClvm> repos) : IRequestHandler<ExportControlTubExcel, byte[]>
+    public class ExportControlTubExcelCommandHandler(IRepositoryCad<EntityClvm> repos) : IRequestHandler<ExportControlTubExcel, byte[]>
     {
-        private readonly IRepositoryCad<CadClvm> _repository = repos;
+        private readonly IRepositoryCad<EntityClvm> _repository = repos;
         public async Task<byte[]> Handle(ExportControlTubExcel req, CancellationToken cancellationToken)
         {
 

@@ -13,9 +13,9 @@ namespace ApplicationCore.CadNotasCore.Fornecedors.Commands.Update
         public Guid IdempotencyKey { get; init; }
     }
 
-    public class UpdateFornecedorCommandHandler(IRepositoryCad<CadFornecedor> repos, IUser user) : IRequestHandler<UpdateFornecedor, Result<int>>
+    public class UpdateFornecedorCommandHandler(IRepositoryCad<EntityFornecedor> repos, IUser user) : IRequestHandler<UpdateFornecedor, Result<int>>
     {
-        private readonly IRepositoryCad<CadFornecedor> _repository = repos;
+        private readonly IRepositoryCad<EntityFornecedor> _repository = repos;
         private readonly IUser _user = user;
 
         public async Task<Result<int>> Handle(UpdateFornecedor req, CancellationToken cancellationToken)

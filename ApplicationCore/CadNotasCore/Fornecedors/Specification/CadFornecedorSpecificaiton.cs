@@ -11,9 +11,9 @@ using static System.Net.WebRequestMethods;
 
 namespace ApplicationCore.CadNotasCore.Fornecedors.Specification
 {
-    public class CadFornecedorSpecificaiton : Specification<CadFornecedor, FornecedorVM>
+    public class CadFornecedorSpecificaiton : Specification<EntityFornecedor, FornecedorVM>
     {
-        public static Expression<Func<CadFornecedor, bool>> BuildFilter(string? filter,int ativo)
+        public static Expression<Func<EntityFornecedor, bool>> BuildFilter(string? filter,int ativo)
         {
             return i => (string.IsNullOrEmpty(filter)
                         || i.Fornecedor.Contains(filter)

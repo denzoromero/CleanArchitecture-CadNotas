@@ -32,11 +32,11 @@ namespace InfrastructureIntegrationTests.InterceptorTests
         [Fact]
         public async Task Should_Log_Added_Action()
         {
-            var fornecedor = CadFornecedor.Create(BuildFornecedor("microsoft"));
+            var fornecedor = EntityFornecedor.Create(BuildFornecedor("microsoft"));
             await _context.AddAsync(fornecedor);
             await _context.SaveChangesAsync();
 
-            _loggerMock.Verify(x => x.LogAsync(It.Is<AuditEntry>(e => e.EntityName == nameof(CadFornecedor) && e.Action == "Added")), Times.Once);
+            _loggerMock.Verify(x => x.LogAsync(It.Is<AuditEntry>(e => e.EntityName == nameof(EntityFornecedor) && e.Action == "Added")), Times.Once);
 
         }
 
@@ -44,7 +44,7 @@ namespace InfrastructureIntegrationTests.InterceptorTests
         public async Task Should_Log_Modified_Action()
         {
 
-            var fornecedor = CadFornecedor.Create(BuildFornecedor("microsoft"));
+            var fornecedor = EntityFornecedor.Create(BuildFornecedor("microsoft"));
             await _context.AddAsync(fornecedor);
             await _context.SaveChangesAsync();
 
@@ -60,7 +60,7 @@ namespace InfrastructureIntegrationTests.InterceptorTests
         [Fact]
         public async Task Should_Log_Delete_Action()
         {
-            var fornecedor = CadFornecedor.Create(BuildFornecedor("microsoft"));
+            var fornecedor = EntityFornecedor.Create(BuildFornecedor("microsoft"));
             await _context.AddAsync(fornecedor);
             await _context.SaveChangesAsync();
 

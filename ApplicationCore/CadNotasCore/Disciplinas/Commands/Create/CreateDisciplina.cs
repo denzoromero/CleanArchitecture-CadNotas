@@ -13,12 +13,12 @@ namespace ApplicationCore.CadNotasCore.Disciplinas.Commands.Create
         public Guid IdempotencyKey { get; init; }
     }
 
-    public class CreateDisciplinaCommandHandler(IRepositoryCad<CadDisciplina> repos) : IRequestHandler<CreateDisciplina, Result<int>>
+    public class CreateDisciplinaCommandHandler(IRepositoryCad<EntityDisciplina> repos) : IRequestHandler<CreateDisciplina, Result<int>>
     {
-        private readonly IRepositoryCad<CadDisciplina> _repository = repos;
+        private readonly IRepositoryCad<EntityDisciplina> _repository = repos;
         public async Task<Result<int>> Handle(CreateDisciplina command, CancellationToken cancellationToken)
         {
-            var disciplina = CadDisciplina.Create(command.Disciplina);
+            var disciplina = EntityDisciplina.Create(command.Disciplina);
 
             await _repository.AddAsync(disciplina, cancellationToken);
 

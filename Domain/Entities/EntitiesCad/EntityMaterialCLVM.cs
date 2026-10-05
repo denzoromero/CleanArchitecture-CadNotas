@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Domain.Entities.EntitiesCad
 {
-    public class CadMaterialCLVM : BaseEntity, IAggregateRoot
+    public class EntityMaterialCLVM : BaseEntity, IAggregateRoot
     {
         public string Codigo { get; private set; } = string.Empty;
         public string? Especificacao { get; private set; }
@@ -19,21 +19,21 @@ namespace Domain.Entities.EntitiesCad
         public string? Peso { get; private set; }
         public string? TipoComponenteMaterial { get; private set; }
 
-        private CadMaterialCLVM() { }
+        private EntityMaterialCLVM() { }
 
-        public CadMaterialCLVM(string codigo)
+        public EntityMaterialCLVM(string codigo)
         {
             Guard.Against.NullOrEmpty(codigo, nameof(codigo));
             Codigo = codigo;
             Ativo = 1;
         }
 
-        public static CadMaterialCLVM Create(string codigo,string? especificacao, string? descricao, string? diametro1, string? diametro2,
+        public static EntityMaterialCLVM Create(string codigo,string? especificacao, string? descricao, string? diametro1, string? diametro2,
             string? comprimento, string? espessura, string? largura, string? peso, string? tipocomponent)
         {
             Guard.Against.NullOrEmpty(codigo, nameof(codigo));
 
-            var entity = new CadMaterialCLVM(codigo)
+            var entity = new EntityMaterialCLVM(codigo)
             {
                 Especificacao = especificacao,
                 Descricao = descricao,

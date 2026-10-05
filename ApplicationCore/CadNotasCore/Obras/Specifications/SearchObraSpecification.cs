@@ -8,9 +8,9 @@ using System.Text;
 
 namespace ApplicationCore.CadNotasCore.Obras.Specifications
 {
-    public class SearchObraSpecification : Specification<CadObra, ObraVM>
+    public class SearchObraSpecification : Specification<EntityObra, ObraVM>
     {
-        public static Expression<Func<CadObra, bool>> BuildFilter(string? filter, int ativo)
+        public static Expression<Func<EntityObra, bool>> BuildFilter(string? filter, int ativo)
         {
             return i => (string.IsNullOrEmpty(filter)
                                                     || i.Obra.Contains(filter)

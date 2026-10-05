@@ -16,9 +16,9 @@ namespace ApplicationCore.CadNotasCore.MaterialCLVMs.Commands.Update
         public Guid IdempotencyKey { get; init; }
     }
 
-    public class UpdateMaterialCLVMCommandHandler(IRepositoryCad<CadMaterialCLVM> repos) : IRequestHandler<UpdateMaterialCLVM, Result<int>>
+    public class UpdateMaterialCLVMCommandHandler(IRepositoryCad<EntityMaterialCLVM> repos) : IRequestHandler<UpdateMaterialCLVM, Result<int>>
     {
-        private readonly IRepositoryCad<CadMaterialCLVM> _repository = repos;
+        private readonly IRepositoryCad<EntityMaterialCLVM> _repository = repos;
         public async Task<Result<int>> Handle(UpdateMaterialCLVM command, CancellationToken cancellationToken)
         {
             var materialCLVM = await _repository.GetByIdAsync(command.Id, cancellationToken);

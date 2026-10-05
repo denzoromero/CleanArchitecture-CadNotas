@@ -15,9 +15,9 @@ namespace ApplicationCore.CadNotasCore.CLVMs.Commands.Update
         public Guid IdempotencyKey { get; init; }
     }
 
-    public class UpdateLVMProcedimentoCommandHandler(IRepositoryCad<CadLVM> repos) : IRequestHandler<UpdateLVMProcedimento, Result<int>>
+    public class UpdateLVMProcedimentoCommandHandler(IRepositoryCad<EntityLVM> repos) : IRequestHandler<UpdateLVMProcedimento, Result<int>>
     {
-        private readonly IRepositoryCad<CadLVM> _repository = repos;
+        private readonly IRepositoryCad<EntityLVM> _repository = repos;
 
         public async Task<Result<int>> Handle(UpdateLVMProcedimento command, CancellationToken cancellationToken)
         {

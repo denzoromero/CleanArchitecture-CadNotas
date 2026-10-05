@@ -15,9 +15,9 @@ namespace ApplicationCore.CadNotasCore.Materials.Queries
     [Authorize]
     public record SearchMaterial : SearchDTO, IRequest<Result<PagedResult<MaterialVM>>>;
 
-    public class SearchMaterialQueryHandler(IRepositoryCad<CadMaterial> repos) : IRequestHandler<SearchMaterial, Result<PagedResult<MaterialVM>>>
+    public class SearchMaterialQueryHandler(IRepositoryCad<EntityMaterial> repos) : IRequestHandler<SearchMaterial, Result<PagedResult<MaterialVM>>>
     {
-        private readonly IRepositoryCad<CadMaterial> _repository = repos;
+        private readonly IRepositoryCad<EntityMaterial> _repository = repos;
 
         public async Task<Result<PagedResult<MaterialVM>>> Handle(SearchMaterial query, CancellationToken cancellationToken)
         {
@@ -25,7 +25,7 @@ namespace ApplicationCore.CadNotasCore.Materials.Queries
             if (items.Count == 0) return Result<PagedResult<MaterialVM>>.Failure(new Error("ERR404", "No result found."));
 
             var predicate = SearchMaterialSpecification.BuildFilter(query.Filter, query.AtivoValue);
-            var totalCount = await _repository.CountAsync(new CountSpecification<CadMaterial>(predicate));
+            var totalCount = await _repository.CountAsync(new CountSpecification<EntityMaterial>(predicate));
 
             return Result<PagedResult<MaterialVM>>.Success(new PagedResult<MaterialVM>
             {

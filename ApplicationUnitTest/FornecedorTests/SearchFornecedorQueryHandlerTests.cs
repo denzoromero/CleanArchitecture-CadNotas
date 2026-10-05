@@ -13,12 +13,12 @@ namespace ApplicationUnitTest.FornecedorTests
 {
     public class SearchFornecedorQueryHandlerTests
     {
-        private readonly Mock<IRepositoryCad<CadFornecedor>> _repositoryMock;
+        private readonly Mock<IRepositoryCad<EntityFornecedor>> _repositoryMock;
         private readonly SearchFornecedorQueryHandler _handler;
 
         public SearchFornecedorQueryHandlerTests()
         {
-            _repositoryMock = new Mock<IRepositoryCad<CadFornecedor>>();
+            _repositoryMock = new Mock<IRepositoryCad<EntityFornecedor>>();
             _handler = new SearchFornecedorQueryHandler(_repositoryMock.Object);
         }
 
@@ -36,7 +36,7 @@ namespace ApplicationUnitTest.FornecedorTests
 
             _repositoryMock.Setup(x => x.ListAsync(It.IsAny<CadFornecedorSpecificaiton>(),It.IsAny<CancellationToken>())).ReturnsAsync(fornecedors);
 
-            _repositoryMock.Setup(x => x.CountAsync(It.IsAny<CountSpecification<CadFornecedor>>())).ReturnsAsync(1);
+            _repositoryMock.Setup(x => x.CountAsync(It.IsAny<CountSpecification<EntityFornecedor>>())).ReturnsAsync(1);
 
             var query = new SearchFornecedorQuery
             {
@@ -53,7 +53,7 @@ namespace ApplicationUnitTest.FornecedorTests
             result.Value.Items.Should().HaveCount(1);
 
             _repositoryMock.Verify(x => x.ListAsync(It.IsAny<CadFornecedorSpecificaiton>(),It.IsAny<CancellationToken>()),Times.Once);
-            _repositoryMock.Verify(x => x.CountAsync(It.IsAny<CountSpecification<CadFornecedor>>()),Times.Once);
+            _repositoryMock.Verify(x => x.CountAsync(It.IsAny<CountSpecification<EntityFornecedor>>()),Times.Once);
         }
 
         [Fact]
@@ -70,7 +70,7 @@ namespace ApplicationUnitTest.FornecedorTests
             var result = await _handler.Handle(query, CancellationToken.None);
 
             result.IsSuccess.Should().BeFalse();
-            _repositoryMock.Verify(x => x.CountAsync(It.IsAny<CountSpecification<CadFornecedor>>()),Times.Never);
+            _repositoryMock.Verify(x => x.CountAsync(It.IsAny<CountSpecification<EntityFornecedor>>()),Times.Never);
 
         }
 

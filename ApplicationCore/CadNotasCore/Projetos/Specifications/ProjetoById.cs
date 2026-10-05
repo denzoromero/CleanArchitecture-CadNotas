@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ApplicationCore.CadNotasCore.Projetos.Specifications
 {
-    public sealed class ProjetoById : Specification<CadProjeto>
+    public sealed class ProjetoById : Specification<EntityProjeto>
     {
         public ProjetoById(int id)
         {

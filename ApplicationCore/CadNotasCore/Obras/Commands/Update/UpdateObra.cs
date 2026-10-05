@@ -16,9 +16,9 @@ namespace ApplicationCore.CadNotasCore.Obras.Commands.Update
         public Guid IdempotencyKey { get; init; }
     }
 
-    public class UpdateObraCommandHandler(IRepositoryCad<CadObra> repos) : IRequestHandler<UpdateObra, Result<int>>
+    public class UpdateObraCommandHandler(IRepositoryCad<EntityObra> repos) : IRequestHandler<UpdateObra, Result<int>>
     {
-        private readonly IRepositoryCad<CadObra> _repository = repos;
+        private readonly IRepositoryCad<EntityObra> _repository = repos;
         public async Task<Result<int>> Handle(UpdateObra command, CancellationToken cancellationToken)
         {
             var obra = await _repository.GetByIdAsync(command.Id, cancellationToken);

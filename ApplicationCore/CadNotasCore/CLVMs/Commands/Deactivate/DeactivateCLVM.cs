@@ -10,9 +10,9 @@ namespace ApplicationCore.CadNotasCore.CLVMs.Commands.Deactivate
 {
     public record DeactivateCLVM(int Id, int IdLVM) : IRequest<Result<int>>;
 
-    public class DeactivateCLVMCommandHandler(IRepositoryCad<CadClvm> repos) : IRequestHandler<DeactivateCLVM, Result<int>>
+    public class DeactivateCLVMCommandHandler(IRepositoryCad<EntityClvm> repos) : IRequestHandler<DeactivateCLVM, Result<int>>
     {
-        private readonly IRepositoryCad<CadClvm> _repository = repos;
+        private readonly IRepositoryCad<EntityClvm> _repository = repos;
         public async Task<Result<int>> Handle(DeactivateCLVM req, CancellationToken cancellationToken)
         {
             var clvm = await _repository.GetByIdAsync(req.Id, cancellationToken);

@@ -13,13 +13,13 @@ namespace ApplicationCore.Interfaces
 {
     public interface IContextCad
     {
-        DbSet<CadObra> CadObras { get; }
-        DbSet<CadFornecedor> CadFornecedors { get; }
-        DbSet<CadMaterial> CadMaterials { get; }
-        DbSet<CadDisciplina> CadDisciplinas { get; }
+        DbSet<EntityObra> CadObras { get; }
+        DbSet<EntityFornecedor> CadFornecedors { get; }
+        DbSet<EntityMaterial> CadMaterials { get; }
+        DbSet<EntityDisciplina> CadDisciplinas { get; }
         DbSet<CadTipoOC> CadTipoOCs { get; }
-        DbSet<CadProjeto> CadProjetos { get; }
-        DbSet<CadLVM> CadLVMs { get; }
+        DbSet<EntityProjeto> CadProjetos { get; }
+        DbSet<EntityLVM> CadLVMs { get; }
         DbSet<ObraVSProjeto> ObraVSProjetos { get; }
     }
 }

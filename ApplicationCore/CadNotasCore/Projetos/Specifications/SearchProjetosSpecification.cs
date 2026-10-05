@@ -8,9 +8,9 @@ using System.Text;
 
 namespace ApplicationCore.CadNotasCore.Projetos.Specifications
 {
-    public class SearchProjetosSpecification : Specification<CadProjeto, ProjetosVM>
+    public class SearchProjetosSpecification : Specification<EntityProjeto, ProjetosVM>
     {
-        public static Expression<Func<CadProjeto, bool>> BuildFilter(string? filter, int ativo)
+        public static Expression<Func<EntityProjeto, bool>> BuildFilter(string? filter, int ativo)
         {
             return i => (string.IsNullOrEmpty(filter)
                                                              || i.Projeto.Contains(filter))

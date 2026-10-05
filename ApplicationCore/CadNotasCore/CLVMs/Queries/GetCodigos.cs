@@ -12,9 +12,9 @@ namespace ApplicationCore.CadNotasCore.CLVMs.Queries
 {
     public record GetCodigos(string codigo) : IRequest<Result<List<MaterialCLVMVM>?>>;
 
-    public class GetCodigosQueryHandler(IRepositoryCad<CadMaterialCLVM> repos) : IRequestHandler<GetCodigos, Result<List<MaterialCLVMVM>?>>
+    public class GetCodigosQueryHandler(IRepositoryCad<EntityMaterialCLVM> repos) : IRequestHandler<GetCodigos, Result<List<MaterialCLVMVM>?>>
     {
-        private readonly IRepositoryCad<CadMaterialCLVM> _repository = repos;
+        private readonly IRepositoryCad<EntityMaterialCLVM> _repository = repos;
         public async Task<Result<List<MaterialCLVMVM>?>> Handle(GetCodigos request, CancellationToken cancellationToken)
         {
             var materials = await _repository.ListAsync(new GetCodigosSpecification(request.codigo), cancellationToken);

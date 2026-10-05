@@ -16,9 +16,9 @@ namespace ApplicationCore.CadNotasCore.Fornecedors.Queries
     [Authorize]
     public record class SearchFornecedorQuery : SearchDTO, IRequest<Result<PagedResult<FornecedorVM>>>;
 
-    public class SearchFornecedorQueryHandler(IRepositoryCad<CadFornecedor> repos) : IRequestHandler<SearchFornecedorQuery, Result<PagedResult<FornecedorVM>>>
+    public class SearchFornecedorQueryHandler(IRepositoryCad<EntityFornecedor> repos) : IRequestHandler<SearchFornecedorQuery, Result<PagedResult<FornecedorVM>>>
     {
-        private readonly IRepositoryCad<CadFornecedor> _repository = repos;
+        private readonly IRepositoryCad<EntityFornecedor> _repository = repos;
 
         public async Task<Result<PagedResult<FornecedorVM>>> Handle(SearchFornecedorQuery request,CancellationToken cancellationToken)
         {
@@ -26,7 +26,7 @@ namespace ApplicationCore.CadNotasCore.Fornecedors.Queries
             if (fornecedors.Count == 0) return Result<PagedResult<FornecedorVM>>.Failure(new Error("ERR404", "No result found."));
 
             var predicate = CadFornecedorSpecificaiton.BuildFilter(request.Filter,request.AtivoValue);
-            var totalCount = await _repository.CountAsync(new CountSpecification<CadFornecedor>(predicate));
+            var totalCount = await _repository.CountAsync(new CountSpecification<EntityFornecedor>(predicate));
 
             return Result<PagedResult<FornecedorVM>>.Success(new PagedResult<FornecedorVM>
             {

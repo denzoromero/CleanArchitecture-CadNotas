@@ -10,13 +10,13 @@ namespace ApplicationCore.CadNotasCore.NotaFiscaisCore.Command.Create
         public Guid IdempotencyKey { get; init; }
     }
 
-    public class CreateNotaFiscaisCommandHandler(IRepositoryCad<CadLVM> repos) : IRequestHandler<CreateNotaFiscais, Result<int>>
+    public class CreateNotaFiscaisCommandHandler(IRepositoryCad<EntityLVM> repos) : IRequestHandler<CreateNotaFiscais, Result<int>>
     {
-        private readonly IRepositoryCad<CadLVM> _repository = repos;
+        private readonly IRepositoryCad<EntityLVM> _repository = repos;
 
         public async Task<Result<int>> Handle(CreateNotaFiscais command, CancellationToken cancellationToken)
         {
-            var lvm = CadLVM.Create(command.IdObra, command.Data,
+            var lvm = EntityLVM.Create(command.IdObra, command.Data,
                 command.NLVM,
                 command.MascaraLVM,
                 command.NotaFiscal,

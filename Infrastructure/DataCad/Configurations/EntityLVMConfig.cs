@@ -7,9 +7,9 @@ using System.Text;
 
 namespace Infrastructure.DataCad.Configurations
 {
-    public class CadLVMConfig : IEntityTypeConfiguration<CadLVM>
+    public class EntityLVMConfig : IEntityTypeConfiguration<EntityLVM>
     {
-        public void Configure(EntityTypeBuilder<CadLVM> builder)
+        public void Configure(EntityTypeBuilder<EntityLVM> builder)
         {
             builder
            .HasOne(p => p.Obra)
@@ -55,7 +55,7 @@ namespace Infrastructure.DataCad.Configurations
              .HasForeignKey(x => x.IdLVM);
 
             builder.Metadata
-            .FindNavigation(nameof(CadLVM.CLVMs))!
+            .FindNavigation(nameof(EntityLVM.CLVMs))!
             .SetField("_clvms");
 
             builder.Navigation(x => x.CLVMs)

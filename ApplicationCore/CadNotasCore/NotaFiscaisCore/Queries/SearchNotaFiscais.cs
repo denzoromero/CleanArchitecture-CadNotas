@@ -16,16 +16,16 @@ namespace ApplicationCore.CadNotasCore.NotaFiscaisCore.Queries
         public int IdObra { get; init; }
     }
 
-    public class SearchNotaFiscaisQueryHandler(IRepositoryCad<CadLVM> repos) : IRequestHandler<SearchNotaFiscais, Result<PagedResult<NotaFiscaisVM>>>
+    public class SearchNotaFiscaisQueryHandler(IRepositoryCad<EntityLVM> repos) : IRequestHandler<SearchNotaFiscais, Result<PagedResult<NotaFiscaisVM>>>
     {
-        private readonly IRepositoryCad<CadLVM> _repository = repos;
+        private readonly IRepositoryCad<EntityLVM> _repository = repos;
         public async Task<Result<PagedResult<NotaFiscaisVM>>> Handle(SearchNotaFiscais query, CancellationToken cancellationToken)
         {
             var items = await _repository.ListAsync(new SearchNotaFiscaisSpecification(query.Filter, query.AtivoValue,query.IdObra, query.PageNo), cancellationToken);
             if (items.Count == 0) return Result<PagedResult<NotaFiscaisVM>>.Failure(new Error("ERR404", "No result found."));
 
             var predicate = SearchNotaFiscaisSpecification.BuildFilter(query.Filter, query.AtivoValue, query.IdObra);
-            var totalCount = await _repository.CountAsync(new CountSpecification<CadLVM>(predicate), cancellationToken);
+            var totalCount = await _repository.CountAsync(new CountSpecification<EntityLVM>(predicate), cancellationToken);
 
             return Result<PagedResult<NotaFiscaisVM>>.Success(new PagedResult<NotaFiscaisVM>
             {

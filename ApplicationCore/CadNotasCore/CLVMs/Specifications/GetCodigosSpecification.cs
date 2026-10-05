@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ApplicationCore.CadNotasCore.CLVMs.Specifications
 {
-    public class GetCodigosSpecification : Specification<CadMaterialCLVM, MaterialCLVMVM>
+    public class GetCodigosSpecification : Specification<EntityMaterialCLVM, MaterialCLVMVM>
     {
         public GetCodigosSpecification(string codigo) 
         {

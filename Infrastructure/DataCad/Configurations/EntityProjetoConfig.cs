@@ -7,9 +7,9 @@ using System.Text;
 
 namespace Infrastructure.DataCad.Configurations
 {
-    public class CadProjetoConfig : IEntityTypeConfiguration<CadProjeto>
+    public class EntityProjetoConfig : IEntityTypeConfiguration<EntityProjeto>
     {
-        public void Configure(EntityTypeBuilder<CadProjeto> builder)
+        public void Configure(EntityTypeBuilder<EntityProjeto> builder)
         {
             builder.HasMany(x => x.Obras)
                     .WithOne(x => x.Projeto)

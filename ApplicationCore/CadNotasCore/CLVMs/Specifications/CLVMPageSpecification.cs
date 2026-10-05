@@ -10,9 +10,9 @@ using static System.Net.WebRequestMethods;
 
 namespace ApplicationCore.CadNotasCore.CLVMs.Specifications
 {
-    public class CLVMPageSpecification : Specification<CadClvm, CLVMVM>
+    public class CLVMPageSpecification : Specification<EntityClvm, CLVMVM>
     {
-        public static Expression<Func<CadClvm, bool>> BuildFilter(int idLVM)
+        public static Expression<Func<EntityClvm, bool>> BuildFilter(int idLVM)
         {
             return i => i.LVM.Id == idLVM && i.Ativo == 1;
         }

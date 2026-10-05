@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ApplicationCore.CadNotasCore.RelatorioCLVMs.Queries.Specificaiton
 {
-    public class GetPrintCLVMSpecification : Specification<CadLVM, GetPrintCLVMPageVM>
+    public class GetPrintCLVMSpecification : Specification<EntityLVM, GetPrintCLVMPageVM>
     {
         public GetPrintCLVMSpecification(int IdLVM) 
         {

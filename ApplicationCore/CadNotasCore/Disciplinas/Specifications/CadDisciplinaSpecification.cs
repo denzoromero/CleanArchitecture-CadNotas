@@ -8,9 +8,9 @@ using System.Text;
 
 namespace ApplicationCore.CadNotasCore.Disciplinas.Specifications
 {
-    public sealed class CadDisciplinaSpecification : Specification<CadDisciplina,DisciplinaVM>
+    public sealed class CadDisciplinaSpecification : Specification<EntityDisciplina,DisciplinaVM>
     {
-        public static Expression<Func<CadDisciplina, bool>> BuildFilter(string? filter, int ativo)
+        public static Expression<Func<EntityDisciplina, bool>> BuildFilter(string? filter, int ativo)
         {
             return i => (string.IsNullOrEmpty(filter)
                                                 || i.Disciplina.Contains(filter))

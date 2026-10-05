@@ -15,9 +15,9 @@ namespace ApplicationCore.CadNotasCore.Obras.Queries
     [Authorize]
     public record SearchObra : SearchDTO, IRequest<Result<PagedResult<ObraVM>>>;
 
-    public class SearchObraQueryHandler(IRepositoryCad<CadObra> repos) : IRequestHandler<SearchObra, Result<PagedResult<ObraVM>>>
+    public class SearchObraQueryHandler(IRepositoryCad<EntityObra> repos) : IRequestHandler<SearchObra, Result<PagedResult<ObraVM>>>
     {
-        private readonly IRepositoryCad<CadObra> _repos = repos;
+        private readonly IRepositoryCad<EntityObra> _repos = repos;
 
         public async Task<Result<PagedResult<ObraVM>>> Handle(SearchObra req, CancellationToken cancellation)
         {
@@ -25,7 +25,7 @@ namespace ApplicationCore.CadNotasCore.Obras.Queries
             if (items.Count == 0) return Result<PagedResult<ObraVM>>.Failure(new Error("ERR404", "No result found."));
 
             var predicate = SearchObraSpecification.BuildFilter(req.Filter, req.AtivoValue);
-            var totalCount = await _repos.CountAsync(new CountSpecification<CadObra>(predicate), cancellation);
+            var totalCount = await _repos.CountAsync(new CountSpecification<EntityObra>(predicate), cancellation);
 
             return Result<PagedResult<ObraVM>>.Success(new PagedResult<ObraVM> { 
                 Items = items,

@@ -11,9 +11,9 @@ using System.Text;
 
 namespace ApplicationCore.CadNotasCore.MaterialCLVMs.Specifications
 {
-    public class CadMaterialCLVMSpecification : Specification<CadMaterialCLVM, MaterialCLVMVM>
+    public class CadMaterialCLVMSpecification : Specification<EntityMaterialCLVM, MaterialCLVMVM>
     {
-        public static Expression<Func<CadMaterialCLVM, bool>> BuildFilter(string? filter, int ativo)
+        public static Expression<Func<EntityMaterialCLVM, bool>> BuildFilter(string? filter, int ativo)
         {
             return i => (string.IsNullOrEmpty(filter)
                             || i.Codigo.Contains(filter)

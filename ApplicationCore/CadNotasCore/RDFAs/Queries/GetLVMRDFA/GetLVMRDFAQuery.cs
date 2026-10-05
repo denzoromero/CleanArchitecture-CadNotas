@@ -16,9 +16,9 @@ namespace ApplicationCore.CadNotasCore.RDFAs.Queries.GetLVMRDFA
         public int IdObra { get; init; }
     }
 
-    public class GetLVMRDFAQueryHandler(IRepositoryCad<CadLVM> repos) : IRequestHandler<GetLVMRDFAQuery, Result<PagedResult<GetLVMRDFAVM>>>
+    public class GetLVMRDFAQueryHandler(IRepositoryCad<EntityLVM> repos) : IRequestHandler<GetLVMRDFAQuery, Result<PagedResult<GetLVMRDFAVM>>>
     {
-        private readonly IRepositoryCad<CadLVM> _repos = repos;
+        private readonly IRepositoryCad<EntityLVM> _repos = repos;
         public async Task<Result<PagedResult<GetLVMRDFAVM>>> Handle (GetLVMRDFAQuery query, CancellationToken cancellationToken)
         {
             var items = await _repos.ListAsync(new GetLVMRDFASpecificaiton(query.Filter, query.IdObra), cancellationToken);
@@ -33,7 +33,7 @@ namespace ApplicationCore.CadNotasCore.RDFAs.Queries.GetLVMRDFA
                         }).ToList();
 
             var predicate = GetLVMRDFASpecificaiton.BuildFilter(query.Filter, query.IdObra);
-            var totalCount = await _repos.CountAsync(new CountSpecification<CadLVM>(predicate), cancellationToken);
+            var totalCount = await _repos.CountAsync(new CountSpecification<EntityLVM>(predicate), cancellationToken);
 
             return Result<PagedResult<GetLVMRDFAVM>>.Success(new PagedResult<GetLVMRDFAVM>
             {

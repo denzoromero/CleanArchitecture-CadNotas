@@ -9,9 +9,9 @@ using System.Text;
 
 namespace ApplicationCore.CadNotasCore.RDFAs.Queries.GetLVMRDFA
 {
-    public class GetLVMRDFASpecificaiton : Specification<CadLVM>
+    public class GetLVMRDFASpecificaiton : Specification<EntityLVM>
     {
-        public static Expression<Func<CadLVM, bool>> BuildFilter(string? mascara, int idObra)
+        public static Expression<Func<EntityLVM, bool>> BuildFilter(string? mascara, int idObra)
         {
             return i => (string.IsNullOrEmpty(mascara) || i.MascaraLVM == mascara)
                                 && i.IdObra == idObra && i.Ativo == 1;

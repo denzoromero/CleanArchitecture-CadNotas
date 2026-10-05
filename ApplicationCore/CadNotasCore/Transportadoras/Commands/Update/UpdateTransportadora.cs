@@ -16,9 +16,9 @@ namespace ApplicationCore.CadNotasCore.Transportadoras.Commands.Update
         public Guid IdempotencyKey { get; init; }
     }
 
-    public class UpdateTransportadoraCommandHandler(IRepositoryCad<CadTransportadora> repos) : IRequestHandler<UpdateTransportadora , Result<int>>
+    public class UpdateTransportadoraCommandHandler(IRepositoryCad<EntityTransportadora> repos) : IRequestHandler<UpdateTransportadora , Result<int>>
     {
-        private readonly IRepositoryCad<CadTransportadora> _repository = repos;
+        private readonly IRepositoryCad<EntityTransportadora> _repository = repos;
 
         public async Task<Result<int>> Handle(UpdateTransportadora req, CancellationToken cancellationToken)
         {

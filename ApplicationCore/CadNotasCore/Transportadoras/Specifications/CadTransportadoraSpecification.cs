@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 
 namespace ApplicationCore.CadNotasCore.Transportadoras.Specifications
 {
-    public class CadTransportadoraSpecification : Specification<CadTransportadora, TransportadoraVM>
+    public class CadTransportadoraSpecification : Specification<EntityTransportadora, TransportadoraVM>
     {
-        public static Expression<Func<CadTransportadora, bool>> BuildFilter(string? filter, int ativo)
+        public static Expression<Func<EntityTransportadora, bool>> BuildFilter(string? filter, int ativo)
         {
             return i => (string.IsNullOrEmpty(filter)
                         || i.Nome.Contains(filter)

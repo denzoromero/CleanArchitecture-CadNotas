@@ -8,7 +8,7 @@ using System.Text;
 
 namespace ApplicationCore.CadNotasCore.CLVMs.Specifications
 {
-    public class GetLVMByIdSpecification : Specification<CadLVM, NotaFiscaisCLVM>
+    public class GetLVMByIdSpecification : Specification<EntityLVM, NotaFiscaisCLVM>
     {
         public GetLVMByIdSpecification(int idLVM)
         {

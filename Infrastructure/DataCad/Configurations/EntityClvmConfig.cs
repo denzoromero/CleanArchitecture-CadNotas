@@ -7,9 +7,9 @@ using System.Text;
 
 namespace Infrastructure.DataCad.Configurations
 {
-    public class CadClvmConfig : IEntityTypeConfiguration<CadClvm>
+    public class EntityClvmConfig : IEntityTypeConfiguration<EntityClvm>
     {
-        public void Configure(EntityTypeBuilder<CadClvm> builder)
+        public void Configure(EntityTypeBuilder<EntityClvm> builder)
         {
             builder
             .HasOne(p => p.LVM)

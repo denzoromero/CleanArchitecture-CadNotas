@@ -16,12 +16,12 @@ namespace ApplicationCore.CadNotasCore.Projetos.Commands.Create
         public Guid IdempotencyKey { get; init; }
     }
 
-    public class CreateProjetoCommandHandler(IRepositoryCad<CadProjeto> repos) : IRequestHandler<CreateProjeto, Result<int>>
+    public class CreateProjetoCommandHandler(IRepositoryCad<EntityProjeto> repos) : IRequestHandler<CreateProjeto, Result<int>>
     {
-        private readonly IRepositoryCad<CadProjeto> _repository = repos;
+        private readonly IRepositoryCad<EntityProjeto> _repository = repos;
         public async Task<Result<int>> Handle(CreateProjeto command, CancellationToken cancellationToken)
         {
-            var projeto = CadProjeto.Create(command.Projeto, command.IdObras);
+            var projeto = EntityProjeto.Create(command.Projeto, command.IdObras);
 
             await _repository.AddAsync(projeto, cancellationToken);
 

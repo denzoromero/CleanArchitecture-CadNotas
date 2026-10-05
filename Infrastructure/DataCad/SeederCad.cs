@@ -130,25 +130,25 @@ namespace Infrastructure.DataCad
             }
         }
 
-        static IEnumerable<CadFornecedor> GetPreconfiguredFornecedors()
+        static IEnumerable<EntityFornecedor> GetPreconfiguredFornecedors()
         {
-            return new List<CadFornecedor>
+            return new List<EntityFornecedor>
             {
                 new("Samsung","samsung","1234","01.01.01"),
                 new("Apple","apple","5678","02.02.02")
             };
         }
 
-        static IEnumerable<CadTransportadora> GetPreconfiguredTransportadoras()
+        static IEnumerable<EntityTransportadora> GetPreconfiguredTransportadoras()
         {
-            return new List<CadTransportadora>
+            return new List<EntityTransportadora>
             {
                 new("Fedex", "123", "01.1.1"),
                 new("DHL", "312", "02.2.2"),
             };
         }
 
-        static IEnumerable<CadObra> GetPreconfiguredObras()
+        static IEnumerable<EntityObra> GetPreconfiguredObras()
         {
             return
             [
@@ -157,7 +157,7 @@ namespace Infrastructure.DataCad
             ];
         }
 
-        static IEnumerable<CadMaterial> GetPreconfiguredMaterials()
+        static IEnumerable<EntityMaterial> GetPreconfiguredMaterials()
         {
             return
             [
@@ -166,7 +166,7 @@ namespace Infrastructure.DataCad
             ];
         }
 
-        static IEnumerable<CadProjeto> GetPreconfiguredCadProjetos()
+        static IEnumerable<EntityProjeto> GetPreconfiguredCadProjetos()
         {
             return [
                 new("P-68"),
@@ -182,7 +182,7 @@ namespace Infrastructure.DataCad
             ];
         }
 
-        static IEnumerable<CadDisciplina> GetPreconfiguredDisciplinas()
+        static IEnumerable<EntityDisciplina> GetPreconfiguredDisciplinas()
         {
             return [
                 new("OE-SAmple"),
@@ -198,7 +198,7 @@ namespace Infrastructure.DataCad
             ];
         }
 
-        static IEnumerable<CadMaterialCLVM> GetPreconfiguredMaterialCLVM()
+        static IEnumerable<EntityMaterialCLVM> GetPreconfiguredMaterialCLVM()
         {
             return [
                 new("BB-80.01.02.73681"),
@@ -215,7 +215,7 @@ namespace Infrastructure.DataCad
             ];
         }
 
-        static IEnumerable<CadLVM> GetPreconfiguredLVMs()
+        static IEnumerable<EntityLVM> GetPreconfiguredLVMs()
         {
             return [
                 new(1, new DateTime(2025, 1, 15)),
@@ -223,7 +223,7 @@ namespace Infrastructure.DataCad
             ];
         }
 
-        static IEnumerable<CadClvm> GetPreconfiguredCLVMs()
+        static IEnumerable<EntityClvm> GetPreconfiguredCLVMs()
         {
             return [
                 new(1,1,"BB-80.01.02.73681",new DateTime(2025, 1, 15), ClvmStatus.Reprovado,1,1),
@@ -231,7 +231,7 @@ namespace Infrastructure.DataCad
             ];
         }
 
-        static IEnumerable<RelatorioCLVM> GetPreconfiguredRelatorioCLVM()
+        static IEnumerable<ReportCLVM> GetPreconfiguredRelatorioCLVM()
         {
             return [
                 new("1", RelatorioStatus.NaoConforme, 1),

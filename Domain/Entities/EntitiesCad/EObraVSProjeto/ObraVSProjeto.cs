@@ -15,9 +15,9 @@ namespace Domain.Entities.EntitiesCad.EObraVSProjeto
 
         public DateTime? DataRegistro { get; private set; }
 
-        public CadObra Obra { get; private set; } = null!;
+        public EntityObra Obra { get; private set; } = null!;
 
-        public CadProjeto Projeto { get; private set; } = null!;
+        public EntityProjeto Projeto { get; private set; } = null!;
 
         private ObraVSProjeto() { }
 

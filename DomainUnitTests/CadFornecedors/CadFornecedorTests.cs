@@ -31,7 +31,7 @@ namespace DomainUnitTests.CadFornecedors
                 IdUser: 1);
 
             // Act
-            var fornecedor = CadFornecedor.Create(param);
+            var fornecedor = EntityFornecedor.Create(param);
 
             // Assert
             fornecedor.Should().NotBeNull();
@@ -68,7 +68,7 @@ namespace DomainUnitTests.CadFornecedors
                        IdUser: 1);
 
             // Act
-            var fornecedor = CadFornecedor.Create(param);
+            var fornecedor = EntityFornecedor.Create(param);
 
             // Assert
             fornecedor.DataRegistro.Should().NotBe(default);
@@ -97,7 +97,7 @@ namespace DomainUnitTests.CadFornecedors
                       IdUser: 1);
 
             // Act
-            Action act = () => CadFornecedor.Create(param);
+            Action act = () => EntityFornecedor.Create(param);
 
             // Assert
             act.Should()
@@ -127,7 +127,7 @@ namespace DomainUnitTests.CadFornecedors
                    IdUser: 0);
 
             // Act
-            Action act = () => CadFornecedor.Create(param);
+            Action act = () => EntityFornecedor.Create(param);
 
             // Assert
             act.Should()
@@ -138,7 +138,7 @@ namespace DomainUnitTests.CadFornecedors
         public void Update_Should_Change_Properties()
         {
             // Arrange
-            var fornecedor = CadFornecedor.Create(
+            var fornecedor = EntityFornecedor.Create(
                 BuildValidFornecedor());
 
             //var update = BuildValidFornecedor();

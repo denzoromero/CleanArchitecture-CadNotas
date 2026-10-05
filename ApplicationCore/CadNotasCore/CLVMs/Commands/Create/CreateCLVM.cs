@@ -14,16 +14,16 @@ namespace ApplicationCore.CadNotasCore.CLVMs.Commands.Create
         public Guid IdempotencyKey { get; init; }
     }
 
-    public class CreateCLVMCommandHandler(IRepositoryCad<CadClvm> repos, IUser user) : IRequestHandler<CreateCLVM, Result<int>>
+    public class CreateCLVMCommandHandler(IRepositoryCad<EntityClvm> repos, IUser user) : IRequestHandler<CreateCLVM, Result<int>>
     {
-        private readonly IRepositoryCad<CadClvm> _repository = repos;
+        private readonly IRepositoryCad<EntityClvm> _repository = repos;
         private readonly IUser _user = user;
         public async Task<Result<int>> Handle(CreateCLVM command, CancellationToken cancellationToken)
         {
             var IsDuplicated = await _repository.AnyAsync(new DuplicateCLVMSpecification(command.IdLVM, command.Item), cancellationToken);
             if (IsDuplicated) return Result<int>.Failure(new Error("403", "Item is Duplicated"));
 
-            var entity = CadClvm.Create(command.IdLVM, command.Item, command.Codigo, command.DtInspecao, command.Status, command.PO, command.IdMaterialCLVM,
+            var entity = EntityClvm.Create(command.IdLVM, command.Item, command.Codigo, command.DtInspecao, command.Status, command.PO, command.IdMaterialCLVM,
                 command.CodObra, command.TipoComponente, command.Certificacao, command.Corrida, command.TMA, command.LVMOrigem, command.UnidadeMedida,
                 command.Qtd, _user.UserId, command.PO, command.Observacao);
 

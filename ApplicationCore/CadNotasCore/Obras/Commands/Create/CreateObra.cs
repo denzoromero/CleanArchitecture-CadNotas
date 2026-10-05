@@ -15,12 +15,12 @@ namespace ApplicationCore.CadNotasCore.Obras.Commands.Create
         public Guid IdempotencyKey { get; init; }
     }
 
-    public class CreateObraCommandHanlder(IRepositoryCad<CadObra> repos) : IRequestHandler<CreateObra, Result<int>>
+    public class CreateObraCommandHanlder(IRepositoryCad<EntityObra> repos) : IRequestHandler<CreateObra, Result<int>>
     {
-        private readonly IRepositoryCad<CadObra> _repository = repos;
+        private readonly IRepositoryCad<EntityObra> _repository = repos;
         public async Task<Result<int>> Handle(CreateObra command, CancellationToken cancellationToken)
         {
-            var obra = CadObra.Create(command.Obra, command.Cliente, command.Descricao, command.Contrato, command.Mascara, command.Ultlvm, command.TransferenciaValue);
+            var obra = EntityObra.Create(command.Obra, command.Cliente, command.Descricao, command.Contrato, command.Mascara, command.Ultlvm, command.TransferenciaValue);
 
             await _repository.AddAsync(obra, cancellationToken);
 

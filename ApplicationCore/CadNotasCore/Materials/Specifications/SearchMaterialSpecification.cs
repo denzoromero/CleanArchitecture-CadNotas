@@ -9,9 +9,9 @@ using System.Text;
 
 namespace ApplicationCore.CadNotasCore.Materials.Specifications
 {
-    public class SearchMaterialSpecification : Specification<CadMaterial, MaterialVM>
+    public class SearchMaterialSpecification : Specification<EntityMaterial, MaterialVM>
     {
-        public static Expression<Func<CadMaterial, bool>> BuildFilter(string? filter, int ativo)
+        public static Expression<Func<EntityMaterial, bool>> BuildFilter(string? filter, int ativo)
         {
             return i => (string.IsNullOrEmpty(filter)
                                                     || i.Material.Contains(filter))

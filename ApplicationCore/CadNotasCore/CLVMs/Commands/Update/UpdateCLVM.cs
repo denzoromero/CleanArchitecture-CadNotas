@@ -16,9 +16,9 @@ namespace ApplicationCore.CadNotasCore.CLVMs.Commands.Update
         public Guid IdempotencyKey { get; init; }
     }
 
-    public class UpdateCLVMCommandHandler(IRepositoryCad<CadClvm> repos) : IRequestHandler<UpdateCLVM, Result<int>>
+    public class UpdateCLVMCommandHandler(IRepositoryCad<EntityClvm> repos) : IRequestHandler<UpdateCLVM, Result<int>>
     {
-        private readonly IRepositoryCad<CadClvm> _repository = repos;
+        private readonly IRepositoryCad<EntityClvm> _repository = repos;
         public async Task<Result<int>> Handle(UpdateCLVM req, CancellationToken cancellationToken)
         {
             var IsDuplicated = await _repository.AnyAsync(new DuplicateCLVMSpecification(req.IdLVM, req.Item, req.Id), cancellationToken);
